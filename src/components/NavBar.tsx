@@ -6,7 +6,7 @@ import {
   import { CloseIcon, HamburgerIcon , ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
 import { NavLink as RouterLink} from 'react-router-dom';
   export default function NavBar(){
-    const logo=require('../assets/logof.png')
+    //const logo=require('../assets/logof.png')
     const { isOpen,onOpen,onToggle } = useDisclosure();
     const { colorMode, toggleColorMode } = useColorMode();
     const {  isOpen:isOpenSignin, onOpen:onOpenSignin,onClose: onCloseSignin, } = useDisclosure();
