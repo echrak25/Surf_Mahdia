@@ -1,58 +1,79 @@
-import { NavLink } from 'react-router-dom';
-import { Stack, Flex, Button, Text, VStack, useBreakpointValue } from '@chakra-ui/react';
-
+import { Container, Box, Stack, Flex, Button, Text, VStack, useBreakpointValue } from '@chakra-ui/react';
+import { Heading, Icon } from '@chakra-ui/react';
+import About from "./About";
+import Activities from "./Activities";
+import { GiWaveSurfer,GiPaddles,GiPaperBoat } from 'react-icons/gi';
 function Home() {
   return (
-    <Flex
-      w="full"
-      h="70vh"
-      backgroundImage="url(https://mahdiasurf.com/.cm4all/mediadb/DSC_0504.jpg)"
-      backgroundSize="cover"
-      backgroundPosition="center center"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <VStack
+    <>
+      <Flex
         w="full"
-        h="200px"
-        justify="center"
-        px={useBreakpointValue({ base: 4, md: 10 })}
-        bgGradient="linear(to-r, blackAlpha.600, transparent)"
-        textAlign="center"
-        spacing={6}
+        h="70vh"
+        backgroundImage="url(https://mahdiasurf.com/.cm4all/mediadb/DSC_0504.jpg)"
+        backgroundSize="cover"
+        backgroundPosition="center center"
+        justifyContent="center"
+        alignItems="center"
       >
-        <Text
-          color="white"
-          fontWeight={600}
-          lineHeight={10}
-          fontSize={{ base: 'xl', md: '4xl' }}
-          fontFamily="Cairo, serif"
+        <VStack
+          w="full"
+          h="200px"
+          justify="center"
+          px={useBreakpointValue({ base: 4, md: 10 })}
+          bgGradient="linear(to-r, blackAlpha.600, transparent)"
+          textAlign="center"
+          spacing={6}
         >
-          "Mahdia: Where the sky meets the sea, and kitesurfers soar with absolute glee."
-        </Text>
-        <Stack direction="row" align="center">
-          <Button
-            bg="blue.400"
-            rounded="full"
+          <Text
             color="white"
-            _hover={{ bg: 'blue.800' }}
+            fontWeight={600}
+            lineHeight={10}
+            fontSize={{ base: 'xl', md: '4xl' }}
+            fontFamily="Cairo, serif"
           >
-            Make Reservation
-          </Button>
-          <Button
-            bg="whiteAlpha.300"
-            rounded="full"
-            color="white"
-            _hover={{ bg: 'whiteAlpha.500' }}
-          >
-            Show me more
-          </Button>
+            "Mahdia: Where the sky meets the sea, and kitesurfers soar with absolute glee."
+          </Text>
+          <Stack direction="row" align="center">
+            <Button
+              bg="blue.400"
+              rounded="full"
+              color="white"
+              _hover={{ bg: 'blue.800' }}
+            >
+              Make Reservation
+            </Button>
+            <Button
+              bg="whiteAlpha.300"
+              rounded="full"
+              color="white"
+              _hover={{ bg: 'whiteAlpha.500' }}
+            >
+              Show me more
+            </Button>
+          </Stack>
+        </VStack>
+      </Flex>
+      <About />
+      <Box p={4}>
+        <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
+          <Heading fontSize={{ base: '2xl', sm: '4xl' }} fontWeight="bold">
+            Our Activities
+          </Heading>
+          <Text color={'gray.600'} fontSize={{ base: 'sm', sm: 'lg' }}>
+            "Unleash your inner adventurer with our activities!"
+          </Text>
         </Stack>
-      </VStack>
-    </Flex>
+        <Container maxW={'5xl'} mt={12}>
+          <Flex flexWrap="wrap" gridGap={6} justify="center">
+          <Activities heading={"kitesurf"} description={"Riding a board while being pulled by a kite"} icon={<Icon as={GiWaveSurfer} w={10} h={10} color="blue.400" />} />
+          <Activities heading={"Stand-up Paddle"} description={"Standing on a board and paddling"} icon={<Icon as={GiPaddles} w={10} h={10} color="blue.400" />} />
+          <Activities heading={"kayack"} description={"Paddling a small boat on water."} icon={<Icon as={GiPaperBoat} w={10} h={10} color="blue.400" />} />
+
+          </Flex>
+        </Container>
+      </Box>
+    </>
   );
-
-
 }
 
 export default Home;
