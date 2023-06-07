@@ -1,7 +1,7 @@
 
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import {
-  FormControl,FormLabel,Input,InputGroup,HStack,InputRightElement,Box,useColorMode,Flex,Text,IconButton,Button,Stack,Collapse,Link,useColorModeValue,useDisclosure,Heading,Checkbox,Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,ModalCloseButton, Image,} from '@chakra-ui/react';
+  FormControl,FormLabel,Input,InputGroup,HStack,InputRightElement,Box,useColorMode,Flex,Text,IconButton,Button,Stack,Collapse,Link,useColorModeValue,useDisclosure,Heading,Checkbox,Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,ModalCloseButton, chakra,} from '@chakra-ui/react';
   import { useState } from 'react';
   import { CloseIcon, HamburgerIcon , ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
 import { NavLink as RouterLink} from 'react-router-dom';
@@ -38,14 +38,7 @@ import { NavLink as RouterLink} from 'react-router-dom';
             />
           
           </Flex>
-          <Image
-p={-5}
-ml={5}
-  borderRadius='full'
-  boxSize='70px'
-  src={logo}
-  alt='Logo'
-/>
+
           <Flex flex={{ base: 1 }}justify={{ base: 'start', md: 'center' }}>
  
             <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
@@ -59,7 +52,7 @@ ml={5}
             direction={'row'} 
             spacing={6}>
             <Button onClick={onOpenSignin}
-            color={'pink.400'}
+            color={'blue.400'}
             as={'a'}
             fontSize={'sm'}
             fontWeight={400}
@@ -81,14 +74,6 @@ ml={5}
       bg={useColorModeValue('gray.50', 'gray.800')}>
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
-        <Image
-p={-5}
-ml={5}
-  borderRadius='full'
-  boxSize='150px'
-  src={logo}
-  alt='Logo'
-/>
           <Heading fontSize={'2xl'}>Sign in to your account</Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
             to enjoy our services you need to sign in ! </Text>
@@ -113,13 +98,13 @@ ml={5}
                 align={'start'}
                 justify={'space-between'}>
                 <Checkbox>Remember me</Checkbox>
-                <Link color={'pink.400'}>Forgot password?</Link>
+                <Link color={'blue.400'}>Forgot password?</Link>
               </Stack>
               <Button
-                bg={'pink.400'}
+                bg={'blue.400'}
                 color={'white'}
                 _hover={{
-                  bg: 'pink.500',
+                  bg: 'blue.500',
                 }}>
                 Sign in
               </Button>
@@ -131,7 +116,7 @@ ml={5}
           </ModalBody>
 
           <ModalFooter>
-            <Button bgColor={'pink.100'} mr={3} onClick={onCloseSignin}>
+            <Button bgColor={'blue.100'} mr={3} onClick={onCloseSignin}>
               Close
             </Button>
           
@@ -143,10 +128,10 @@ ml={5}
               fontSize={'sm'}
               fontWeight={600}
               color={'white'}
-              bg={'pink.400'}
+              bg={'blue.400'}
              
               _hover={{
-                bg: 'pink.300',
+                bg: 'blue.300',
               }}>
               Sign Up
             </Button>
@@ -163,14 +148,7 @@ ml={5}
       bg={useColorModeValue('gray.50', 'gray.800')}>
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
-        <Image
-p={-5}
-ml={5}
-  borderRadius='full'
-  boxSize='150px'
-  src={logo}
-  alt='Logo'
-/>
+
           <Heading fontSize={'4xl'} textAlign={'center'}>
             Sign up
           </Heading>
@@ -221,17 +199,17 @@ ml={5}
               <Button
                 loadingText="Submitting"
                 size="lg"
-                bg={'pink.400'}
+                bg={'blue.400'}
                 color={'white'}
                 _hover={{
-                  bg: 'pink.500',
+                  bg: 'blue.500',
                 }}>
                 Sign up
               </Button>
             </Stack>
             <Stack pt={6}>
               <Text align={'center'}>
-                Already a user? <Link color={'pink.400'}>Login</Link>
+                Already a user? <Link color={'blue.400'}>Login</Link>
               </Text>
             </Stack>
           </Stack>
@@ -240,7 +218,7 @@ ml={5}
     </Flex>
           </ModalBody>
           <ModalFooter>
-            <Button bgColor={'pink.200'} mr={3} onClick={onCloseSignup}>
+            <Button bgColor={'blue.200'} mr={3} onClick={onCloseSignup}>
               Close
             </Button>
 
@@ -266,22 +244,22 @@ ml={5}
   const NAV_ITEMS: Array<NavItem> = [
     {
 
-      label: 'Jewelry',
-      href:'/Jewlery'
+      label: 'Packs',
+      href:'/Packs'
 
     },
     {
-      label: 'Clothing',
-      href: '/Clothing',
+      label: 'Pricing',
+      href: '/Pricing',
       
     },
     {
-      label: 'Scarves',
-      href: '/Scarves',
+      label: 'KiteSurf',
+      href: '/KiteSurf',
     },
     {
-      label: 'HairAccessories',
-      href: '/HairAccessories',
+      label: 'Stand-up-paddle ',
+      href: '/Stand-up-paddle ',
     },
     {
       label: 'Home',
@@ -289,33 +267,34 @@ ml={5}
     },
   ];
 
-const DesktopNav = () => {
-  const linkColor = useColorModeValue('gray.600', 'white');
-  const linkHoverColor = useColorModeValue('pink.400', 'pink.100');
-  return (
-    <Stack direction={'row'} spacing={4}>
-      {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label}>
-         
-    
-              <RouterLink 
-                to={navItem.href as string }
-                color={linkColor}
-              >{navItem.label}</RouterLink>
-            
-        
-        </Box>
-      ))}
-    </Stack>
-  );
-};
+  const DesktopNav = () => {
+    const linkColor = useColorModeValue('gray.600', 'white');
+    const linkHoverColor = useColorModeValue('blue.400', 'blue.100');
+  
+    return (
+      <Stack direction="row" spacing={4}>
+        {NAV_ITEMS.map((navItem) => (
+          <Box key={navItem.label}>
+            <Link
+              as={RouterLink}
+              to={navItem.href as string}
+              color={linkColor}
+              _hover={{
+                color: linkHoverColor,
+                textDecoration: 'underline',
+              }}
+            >
+              {navItem.label}
+            </Link>
+          </Box>
+        ))}
+      </Stack>
+    );
+  };
 
 <>
   <DesktopNav />
- 
   </>
-
-
   const MobileNav = () => {
     return (
       <Stack
@@ -342,6 +321,7 @@ const DesktopNav = () => {
           align={'center'}
           _hover={{
             textDecoration: 'none',
+            color: useColorModeValue('blue.400', 'blue.400')
           }}>
              <RouterLink 
                 to={href }

@@ -28,14 +28,13 @@ function Home() {
           fontWeight={700}
           lineHeight={1.2}
           fontSize={useBreakpointValue({ base: '3xl', md: '4xl' })}>
-         Get your latest fashion faves with our new in accessories.We've got you covered all year round, with seasonal favourites from chunky knit scarves to wedding dresses.
-        </Text>
+        .... </Text>
         <Stack direction={'row'}>
           <Button
-            bg={'pink.400'}
+            bg={'blue.400'}
             rounded={'full'}
             color={'white'}
-            _hover={{ bg: 'pink.800' }}>
+            _hover={{ bg: 'blue.800' }}>
            Show me more
           </Button>
           <Button
