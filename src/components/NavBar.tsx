@@ -243,12 +243,6 @@ import { NavLink as RouterLink} from 'react-router-dom';
   
   const NAV_ITEMS: Array<NavItem> = [
     {
-
-      label: 'Packs',
-      href:'/Packs'
-
-    },
-    {
       label: 'Pricing',
       href: '/Pricing',
       

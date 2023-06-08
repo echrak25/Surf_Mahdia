@@ -11,17 +11,20 @@ import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import KiteSurf from "./components/KiteSurf";
 import Footer from "./components/footer";
-import Standuppaddle from "./components/Standuppaddle";
-
+import Standuppaddle from"./components/standuppaddle2";
+import Pricing from "./components/Pricing";
 export const App = () => (
   <ChakraProvider >
  <NavBar></NavBar> 
  
  <Routes>
  <Route path="/" element={<Home/>}/>
+      <Route path="Stand-up-paddle" element={<Standuppaddle></Standuppaddle>}/>
       <Route path="Home" element={<Home/>}/>
       <Route path="KiteSurf" element={<KiteSurf></KiteSurf>}/>
       <Route path="Stand-up-paddle" element={<Standuppaddle></Standuppaddle>}/>
+      <Route path="Pricing" element={<Pricing></Pricing>}/>
+      
   </Routes>
   <Footer></Footer>
   </ChakraProvider>
