@@ -94,6 +94,15 @@ import {
                         <Input type="number" name="Number" placeholder="Your PhoneNumber" />
                       </InputGroup>
                     </FormControl>
+                    <FormControl isRequired>
+                      <FormLabel>Activities</FormLabel>
+  
+                      <InputGroup>
+                        <InputLeftElement />
+                        <Input type="activity" name="activity" placeholder="choose your Activity" />
+                      </InputGroup>
+                    </FormControl>
+                
   
                     <FormControl isRequired>
                       <FormLabel>Date</FormLabel>
