@@ -9,9 +9,11 @@ import {
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import About from "./components/About";
+import Footer from "./components/footer";
 export const App = () => (
   <ChakraProvider >
  <NavBar></NavBar> 
+
  <Routes>
 
  <Route path="/" element={<Home/>}/>
@@ -19,6 +21,6 @@ export const App = () => (
 
   </Routes>
 
-    
+  <Footer></Footer>
   </ChakraProvider>
 )

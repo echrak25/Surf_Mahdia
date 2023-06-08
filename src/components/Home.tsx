@@ -1,6 +1,7 @@
 import { Container, Box, Stack, Flex, Button, Text, VStack, useBreakpointValue } from '@chakra-ui/react';
 import { Heading, Icon } from '@chakra-ui/react';
 import About from "./About";
+import Reservation from "./Reservation";
 import Activities from "./Activities";
 import { GiWaveSurfer,GiPaddles,GiPaperBoat } from 'react-icons/gi';
 function Home() {
@@ -72,6 +73,7 @@ function Home() {
           </Flex>
         </Container>
       </Box>
+      
     </>
   );
 }
