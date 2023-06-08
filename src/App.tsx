@@ -16,6 +16,7 @@ import Standuppaddle from "./components/Standuppaddle";
 export const App = () => (
   <ChakraProvider >
  <NavBar></NavBar> 
+ 
  <Routes>
  <Route path="/" element={<Home/>}/>
       <Route path="Home" element={<Home/>}/>
