@@ -58,7 +58,7 @@ export default function Footer() {
     <Box
       bg={useColorModeValue('gray.50', 'gray.900')}
       color={useColorModeValue('blue.700', 'blue.200')}>
-      <Container as={Stack} maxW={'6xl'} py={10}>
+      <Container as={Stack} maxW={'8xl'}  py={10}>
         <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={8}>
           <Stack align={'flex-start'}>
             <ListHeader>Company</ListHeader>
@@ -67,22 +67,6 @@ export default function Footer() {
             <Link href={'#'}>Careers</Link>
             <Link href={'#'}>Contact Us</Link>
           </Stack>
-
-          <Stack align={'flex-start'}>
-            <ListHeader>Support</ListHeader>
-            <Link href={'#'}>Help Center</Link>
-            <Link href={'#'}>Safety Center</Link>
-            <Link href={'#'}>Community Guidelines</Link>
-          </Stack>
-
-          <Stack align={'flex-start'}>
-            <ListHeader>Legal</ListHeader>
-            <Link href={'#'}>Cookies Policy</Link>
-            <Link href={'#'}>Privacy Policy</Link>
-            <Link href={'#'}>Terms of Service</Link>
-            <Link href={'#'}>Law Enforcement</Link>
-          </Stack>
-
           <Stack align={'flex-start'}>
             <ListHeader>Install App </ListHeader>
             <Link href={'https://play.google.com/store/apps/details?id=com.swisscontact.mahdia.guide'}>Android</Link>
@@ -96,17 +80,17 @@ export default function Footer() {
         borderTopWidth={1}
         borderStyle={'solid'}
         borderColor={useColorModeValue('gray.200', 'gray.700')}>
-        <Container
-          as={Stack}
-          maxW={'6xl'}
-          py={4}
-          direction={{ base: 'column', md: 'row' }}
-          spacing={4}
-          justify={{ md: 'space-between' }}
-          align={{ md: 'center' }}>
+         <Container
+      as={Stack}
+      maxW={'8xl'}
+      py={4}
+      direction={{ base: 'column', md: 'row' }}
+      spacing={4}
+      justify={{ md: 'space-between' }}
+      align={{ md: 'center' }}
+      h={20} >
           <Text>© 2023 Mahdia Paddle. All rights reserved</Text>
           <Stack direction={'row'} spacing={6}>
-          
             <SocialButton label={'Facebook'} href={'https://www.facebook.com/p/MahdiaPaddleKitesurf-100064056634363/'}>
               <FaFacebook />
             </SocialButton>
