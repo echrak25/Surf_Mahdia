@@ -11,6 +11,8 @@ import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import KiteSurf from "./components/KiteSurf";
 import Footer from "./components/footer";
+import Standuppaddle from "./components/Standuppaddle";
+
 export const App = () => (
   <ChakraProvider >
  <NavBar></NavBar> 
