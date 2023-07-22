@@ -1,24 +1,24 @@
+import React from 'react';
 import {
-    Box,
-    chakra,
-    Container,
-    Stack,
-    Text,
-    Image,
-    Flex,
-    VStack,
-    Button,
-    Heading,
-    SimpleGrid,
-    StackDivider,
-    useColorModeValue,
-    VisuallyHidden,
-    List,
-    ListItem,
-  } from '@chakra-ui/react';
-  import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
-  import { MdLocalShipping } from 'react-icons/md';
-  import Reservation from './Reservation';
+  Box,
+  chakra,
+  Container,
+  Stack,
+  Text,
+  Image,
+  Flex,
+  VStack,
+  Button,
+  Heading,
+  SimpleGrid,
+  StackDivider,
+  useColorModeValue,
+  List,
+  ListItem,
+} from '@chakra-ui/react';
+import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { MdLocalShipping } from 'react-icons/md';
+import { Link } from 'react-router-dom';
   
   export default function Standuppaddle() {
     return (
@@ -112,23 +112,24 @@ We kindly ask you to contact us by telephone or Instagram for all details about 
               </Box>
             </Stack>
   
-            <Button  onClick={Reservation}
-              rounded={'none'}
-              w={'full'}
-              mt={8}
-              size={'lg'}
-              py={'7'}
-              bg={useColorModeValue('gray.900', 'gray.50')}
-              color={useColorModeValue('white', 'gray.900')}
-              textTransform={'uppercase'}
-              _hover={{
-                transform: 'translateY(2px)',
-                boxShadow: 'lg',
-              }}>
-              Reservation
-            </Button>
-  
-            
+            <Button
+            as={Link} // Use Link instead of Button to navigate to Reservation component
+            to="/reservation" // Specify the destination route
+            rounded={'none'}
+            w={'full'}
+            mt={8}
+            size={'lg'}
+            py={'7'}
+            bg={useColorModeValue('gray.900', 'gray.50')}
+            color={useColorModeValue('white', 'gray.900')}
+            textTransform={'uppercase'}
+            _hover={{
+              transform: 'translateY(2px)',
+              boxShadow: 'lg',
+            }}
+          >
+            Reservation
+          </Button>
           </Stack>
         </SimpleGrid>
       </Container>

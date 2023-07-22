@@ -13,10 +13,10 @@ import KiteSurf from "./components/KiteSurf";
 import Footer from "./components/footer";
 import Standuppaddle from"./components/standuppaddle2";
 import Pricing from "./components/Pricing";
+import Reservation from "./components/Reservation";
 export const App = () => (
   <ChakraProvider >
  <NavBar></NavBar> 
- 
  <Routes>
  <Route path="/" element={<Home/>}/>
       <Route path="Stand-up-paddle" element={<Standuppaddle></Standuppaddle>}/>
@@ -24,6 +24,7 @@ export const App = () => (
       <Route path="KiteSurf" element={<KiteSurf></KiteSurf>}/>
       <Route path="Stand-up-paddle" element={<Standuppaddle></Standuppaddle>}/>
       <Route path="Pricing" element={<Pricing></Pricing>}/>
+      <Route path="Reservation" element={<Reservation></Reservation>}/>
       
   </Routes>
   <Footer></Footer>

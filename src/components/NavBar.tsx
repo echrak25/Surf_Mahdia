@@ -256,6 +256,12 @@ import { NavLink as RouterLink} from 'react-router-dom';
       href: '/Stand-up-paddle ',
     },
     {
+      label: 'kayak',
+      href: '/Kayak',
+      
+    },
+    
+    {
       label: 'Home',
       href: '/',
     },

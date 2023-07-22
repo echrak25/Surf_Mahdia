@@ -1,149 +1,188 @@
-import { Icon } from '@chakra-ui/icon';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import {
-    Box,
-    Button,
-    Flex,
-    FormControl,
-    FormLabel,
-    Heading,
-    IconButton,
-    Input,
-    InputGroup,
-    InputLeftElement,
-    Stack,
-    Textarea,
-    Tooltip,
-    useClipboard,
-    useColorModeValue,
-    VStack,
-  } from '@chakra-ui/react';
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Select,
+  VStack,
+} from '@chakra-ui/react';
+import { BsPerson } from 'react-icons/bs';
+import { IoIosMail, IoMdCall } from 'react-icons/io';
 
-  import {BsPerson } from 'react-icons/bs';
-  import { IoIosMail ,IoMdCall} from "react-icons/io";
+export default function Reservation() {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    activity: '',
+    date: '',
+    time: '',
+  });
 
-  
-  export default function Reservation() {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:3000/api/reservations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    return (
-      <Flex
-        bg={useColorModeValue('gray.100', 'gray.900')}
-        align="center"
-        justify="center"
-        id="contact">
-        <Box
-          borderRadius="lg"
-          width="7200px"
-          m={{ base: 5, md: 16, lg: 10 }}
-          p={{ base: 5, lg: 16 }}>
-          <Box>
-            <VStack spacing={{ base: 4, md: 8, lg: 20 }}>
-              <Heading
-                fontSize={{
-                  base: '2xl',
-                  md: '3xl',
-                }}>
-                "Get your Reservation"
-              </Heading>
-  
-              <Stack
-                spacing={{ base: 4, md: 8, lg: 20 }}
-                direction={{ base: 'column', md: 'row' }}>
-                
-  
-                <Box
-                  bg={useColorModeValue('white', 'gray.700')}
-                  borderRadius="lg"
-                  p={50}
-                  color={useColorModeValue('gray.700', 'whiteAlpha.900')}
-                  shadow="base">
-                  <VStack spacing={5}>
-                    <FormControl isRequired>
-                      <FormLabel>Name</FormLabel>
-  
-                      <InputGroup>
-                        <InputLeftElement children={<BsPerson />} />
-                        <Input type="text" name="Firstname" placeholder="Your FirstName" />
-                      </InputGroup>
-                    </FormControl>
-                    <FormControl isRequired>
-                      <FormLabel>LastName</FormLabel>
-  
-                      <InputGroup>
-                        <InputLeftElement children={<BsPerson />} />
-                        <Input type="text" name="LastName" placeholder="Your LastName" />
-                      </InputGroup>
-                    </FormControl>
-  
-                    <FormControl isRequired>
-                      <FormLabel >Email</FormLabel>
-  
-                      <InputGroup>
-                        <InputLeftElement children={<IoIosMail />} />
-                        <Input
-                          type="email"
-                          name="email"
-                          placeholder="Your Email"
-                        />
-                      </InputGroup>
-                    </FormControl>
-                    <FormControl isRequired>
-                      <FormLabel>PhoneNumber</FormLabel>
-  
-                      <InputGroup>
-                        <InputLeftElement children={<IoMdCall />} />
-                        <Input type="number" name="Number" placeholder="Your PhoneNumber" />
-                      </InputGroup>
-                    </FormControl>
-                    <FormControl isRequired>
-                      <FormLabel>Activities</FormLabel>
-  
-                      <InputGroup>
-                        <InputLeftElement />
-                        <Input type="activity" name="activity" placeholder="choose your Activity" />
-                      </InputGroup>
-                    </FormControl>
-                
-  
-                    <FormControl isRequired>
-                      <FormLabel>Date</FormLabel>
-                      <InputGroup>
-                        <InputLeftElement />
-                        <Input name="date" type="date"/>
+      if (response.ok) {
+        // Reservation created successfully
+        console.log('Reservation created!');
+        // Reset the form
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phoneNumber: '',
+          activity: '',
+          date: '',
+          time: '',
+        });
+      } else {
+        // Error in creating the reservation
+        console.error('Failed to create reservation');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
-                      </InputGroup>
-  
-                      
-                      
-                    </FormControl>
-                    <FormControl isRequired>
-                      <FormLabel>Time</FormLabel>
-                      <InputGroup>
-                        <InputLeftElement  />
-                        <Input name="time" type="time"/>
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-                      </InputGroup>
-  
-                      
-                      
-                    </FormControl>
-  
-  
-                    <Button
-                      colorScheme="blue"
-                      bg="blue.400"
-                      color="white"
-                      _hover={{
-                        bg: 'blue.500',
-                      }}
-                    >
-                        Confirm
-                    </Button>
-                  </VStack>
-                </Box>
-              </Stack>
-            </VStack>
-          </Box>
+  const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [e.target.name]: e.target.value,
+    }));
+  };
+  return (
+    <Flex align="center" justify="center" id="contact">
+      <Box borderRadius="lg" width="720px" m={{ base: 5, md: 16, lg: 10 }} p={{ base: 5, lg: 16 }}>
+        <Box>
+          <VStack spacing={8}>
+            <Heading fontSize={{ base: '2xl', md: '3xl' }}>
+              "Get your Reservation"
+            </Heading>
+            <form onSubmit={handleSubmit}>
+              <VStack spacing={5} align="start">
+                <FormControl isRequired>
+                  <FormLabel>Name</FormLabel>
+                  <InputGroup>
+                    <InputLeftElement children={<BsPerson />} />
+                    <Input
+                      type="text"
+                      name="firstName"
+                      placeholder="Your FirstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                </FormControl>
+                <FormControl isRequired>
+                  <FormLabel>LastName</FormLabel>
+                  <InputGroup>
+                    <InputLeftElement children={<BsPerson />} />
+                    <Input
+                      type="text"
+                      name="lastName"
+                      placeholder="Your LastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                </FormControl>
+                <FormControl isRequired>
+                  <FormLabel>Email</FormLabel>
+                  <InputGroup>
+                    <InputLeftElement children={<IoIosMail />} />
+                    <Input
+                      type="email"
+                      name="email"
+                      placeholder="Your Email"
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                </FormControl>
+                <FormControl isRequired>
+                  <FormLabel>PhoneNumber</FormLabel>
+                  <InputGroup>
+                    <InputLeftElement children={<IoMdCall />} />
+                    <Input
+                      type="number"
+                      name="phoneNumber"
+                      placeholder="Your PhoneNumber"
+                      value={formData.phoneNumber}
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                </FormControl>
+                <FormControl isRequired>
+                  <FormLabel>Activities</FormLabel>
+                  <Select
+                    name="activity"
+                    placeholder="Choose your Activity"
+                    value={formData.activity}
+                    onChange={handleSelectChange}
+                  >
+                    <option value="surf">Surf</option>
+                    <option value="paddle">Paddle</option>
+                    <option value="kayak">Kayak</option>
+                  </Select>
+                </FormControl>
+                <FormControl isRequired>
+                  <FormLabel>Date</FormLabel>
+                  <InputGroup>
+                    <Input
+                      type="date"
+                      name="date"
+                      value={formData.date}
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                </FormControl>
+                <FormControl isRequired>
+                  <FormLabel>Time</FormLabel>
+                  <InputGroup>
+                    <Input
+                      type="time"
+                      name="time"
+                      value={formData.time}
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                </FormControl>
+                <Button
+                  colorScheme="blue"
+                  bg="blue.400"
+                  color="white"
+                  _hover={{ bg: 'blue.500' }}
+                  type="submit"
+                >
+                  Confirm
+                </Button>
+              </VStack>
+            </form>
+          </VStack>
         </Box>
-      </Flex>
-    );
-  }
+      </Box>
+    </Flex>
+  );
+}
