@@ -1,4 +1,4 @@
-
+import { Link } from 'react-router-dom';
 import {
   Box,
   Center,
@@ -66,6 +66,8 @@ export default function Pricing(props: CardProps) {
           </List>
 
           <Button
+          as={Link}
+          to="/reservation"
             mt={10}
             w={'full'}
             bg={'blue.400'}

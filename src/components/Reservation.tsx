@@ -1,10 +1,15 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import {
   Box,
   Button,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
+  HStack,
   Heading,
   Input,
   InputGroup,
@@ -26,8 +31,34 @@ export default function Reservation() {
     time: '',
   });
 
+  const [dateError, setDateError] = useState('');
+  const [timeError, setTimeError] = useState('');
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0); // Set time to midnight to ignore time differences
+
+    const selectedDate = new Date(formData.date);
+    selectedDate.setHours(0, 0, 0, 0);
+
+    const selectedTime = new Date(`1970-01-01T${formData.time}`);
+    const startTime = new Date(`1970-01-01T05:00:00`);
+    const endTime = new Date(`1970-01-01T19:00:00`);
+
+    setDateError('');
+    setTimeError('');
+
+    if (selectedDate <= currentDate) {
+      setDateError('Please select a date at least two days after the current date.');
+      return;
+    }
+
+    if (selectedTime < startTime || selectedTime > endTime) {
+      setTimeError('Please select a time between 05:00 and 19:00.');
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:3000/api/reservations', {
         method: 'POST',
@@ -40,6 +71,10 @@ export default function Reservation() {
       if (response.ok) {
         // Reservation created successfully
         console.log('Reservation created!');
+        toast.success('Reservation submitted! Wait for a call from the instructor to confirm and talk about details', {
+          position: 'top-right', // Customize notification position
+          autoClose: 5000, // Set auto-close duration in milliseconds
+        });
         // Reset the form
         setFormData({
           firstName: '',
@@ -72,6 +107,7 @@ export default function Reservation() {
       [e.target.name]: e.target.value,
     }));
   };
+
   return (
     <Flex align="center" justify="center" id="contact">
       <Box borderRadius="lg" width="720px" m={{ base: 5, md: 16, lg: 10 }} p={{ base: 5, lg: 16 }}>
@@ -147,7 +183,7 @@ export default function Reservation() {
                     <option value="kayak">Kayak</option>
                   </Select>
                 </FormControl>
-                <FormControl isRequired>
+                <FormControl isRequired isInvalid={!!dateError}>
                   <FormLabel>Date</FormLabel>
                   <InputGroup>
                     <Input
@@ -157,8 +193,9 @@ export default function Reservation() {
                       onChange={handleChange}
                     />
                   </InputGroup>
+                  <FormErrorMessage>{dateError}</FormErrorMessage>
                 </FormControl>
-                <FormControl isRequired>
+                <FormControl isRequired isInvalid={!!timeError}>
                   <FormLabel>Time</FormLabel>
                   <InputGroup>
                     <Input
@@ -168,7 +205,9 @@ export default function Reservation() {
                       onChange={handleChange}
                     />
                   </InputGroup>
+                  <FormErrorMessage>{timeError}</FormErrorMessage>
                 </FormControl>
+                <HStack spacing={20}>
                 <Button
                   colorScheme="blue"
                   bg="blue.400"
@@ -178,6 +217,16 @@ export default function Reservation() {
                 >
                   Confirm
                 </Button>
+                <Button
+                  colorScheme="red"
+                  bg="red.900"
+                  color="white"
+                  _hover={{ bg: 'red' }}
+                  type="submit"
+                >
+                 get more informations
+                </Button>
+                </HStack>
               </VStack>
             </form>
           </VStack>

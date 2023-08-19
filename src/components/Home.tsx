@@ -5,12 +5,13 @@ import Reservation from "./Reservation";
 import Activities from "./Activities";
 import { GiWaveSurfer,GiPaddles,GiPaperBoat } from 'react-icons/gi';
 function Home() {
+  const img =  require("../assets/DSC_0504.jpg");
   return (
     <>
       <Flex
         w="full"
         h="70vh"
-        backgroundImage="url(https://mahdiasurf.com/.cm4all/mediadb/DSC_0504.jpg)"
+        backgroundImage={img}
         backgroundSize="cover"
         backgroundPosition="center center"
         justifyContent="center"

@@ -9,6 +9,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 function About() {
+  const img =  require("../assets/team.jpg");
   return (
     <Container maxW={'7xl'} p="12">
     <Heading as="h1">About us</Heading>
@@ -30,9 +31,7 @@ function About() {
           marginTop="5%">
           <Image
               borderRadius="lg"
-              src={
-                'https://scontent.ftun16-1.fna.fbcdn.net/v/t39.30808-6/310469648_491512756327275_8249089173187587568_n.jpg?stp=dst-jpg_s960x960&_nc_cat=110&ccb=1-7&_nc_sid=730e14&_nc_ohc=oQu1JxRUkCoAX99ByQL&_nc_ht=scontent.ftun16-1.fna&oh=00_AfAVGm4WVUKZ8rXYv9bZwKUDlnRA0Bx_2zl-GVLPwFHbsg&oe=648630C5'
-              }
+              src={img}
               alt="team photo"
               objectFit="contain"
               

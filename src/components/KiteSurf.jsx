@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   Box,
-  chakra,
   Container,
   Stack,
   Text,
@@ -17,8 +16,7 @@ import {
   List,
   ListItem,
 } from '@chakra-ui/react';
-import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
-import { MdLocalShipping } from 'react-icons/md';
+
 
 export default function KiteSurf() {
   return (
