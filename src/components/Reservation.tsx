@@ -223,8 +223,19 @@ export default function Reservation() {
                   color="white"
                   _hover={{ bg: 'red' }}
                   type="submit"
+                  onClick={() =>
+                    toast.info("You can call us on our numbers for more information! you can find them in home page ", {
+                      position: "top-right", // Customize notification position
+                      autoClose: 40000, // Set auto-close duration in milliseconds (40 seconds)
+                      hideProgressBar: true, // Hide the progress bar
+                      closeOnClick: true, // Close the notification when clicked
+                      pauseOnHover: true, // Pause the timer when hovered
+                      draggable: true, // Make the notification draggable
+                    })
+                  }
                 >
                  get more informations
+                 
                 </Button>
                 </HStack>
               </VStack>

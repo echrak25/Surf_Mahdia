@@ -69,6 +69,7 @@ Whether you are a devoted sea lover, a mountain enthusiast, or even an ardent ca
 Join us on this extraordinary journey, where the majesty of the sea, the awe-inspiring heights of the mountains, and the irresistible charm of our feline friends converge. Let us awaken your spirit and embark together on a voyage that will forever remain etched in your heart as "the best day of your life.".</Text>
       </Box>
     </Box>
+    
   </Container>
   );
 

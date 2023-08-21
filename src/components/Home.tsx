@@ -78,7 +78,19 @@ function Home() {
           </Flex>
         </Container>
       </Box>
-      
+      <Box p={8} bg="blue.800">
+        <Container maxW="xl">
+          <VStack spacing={4} align="center">
+          <Heading size="xl" color="blue.200">Contact Us</Heading>
+            <Text  size="lg">
+              Have questions or want to learn more? Dont hesitate to Contact us !
+            </Text>
+            <Text fontWeight="bold">Mahdia Kayaks : 20040801</Text>
+<Text fontWeight="bold">Paddle kitesurf tunisia : 99273375</Text>
+
+          </VStack>
+        </Container>
+      </Box>
     </>
   );
 }

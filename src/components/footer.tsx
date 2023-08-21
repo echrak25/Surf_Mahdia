@@ -61,11 +61,8 @@ export default function Footer() {
       <Container as={Stack} maxW={'8xl'}  py={10}>
         <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={8}>
           <Stack align={'flex-start'}>
-            <ListHeader>Company</ListHeader>
-            <Link href={'#'}>About Us</Link>
+  
             <Link href={'https://www.google.com/maps/place/Paddle+Mahdia/@35.5045453,11.063163,16z/data=!4m6!3m5!1s0x13022362534bccb9:0xf910e873338e1650!8m2!3d35.5045453!4d11.0693348!16s%2Fg%2F11t9cv7688?hl=en-US&entry=ttu'}>Map</Link>
-            <Link href={'#'}>Careers</Link>
-            <Link href={'#'}>Contact Us</Link>
           </Stack>
           <Stack align={'flex-start'}>
             <ListHeader>Install App </ListHeader>

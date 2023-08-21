@@ -198,10 +198,11 @@ import axios from 'axios';
   
   const NAV_ITEMS: Array<NavItem> = [
     {
-      label: 'Pricing',
-      href: '/Pricing',
-      
+      label: 'Home',
+      href: '/',
     },
+   
+    
     {
       label: 'KiteSurf',
       href: '/KiteSurf',
@@ -216,10 +217,10 @@ import axios from 'axios';
       
     },
     
-    {
-      label: 'Home',
-      href: '/',
-    },
+   {
+      label: 'Pricing',
+      href: '/Pricing',}
+      
   ];
 
   const DesktopNav = () => {
