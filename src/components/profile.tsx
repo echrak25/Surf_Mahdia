@@ -8,6 +8,7 @@ import {
   ListItem,
   Text,
 } from '@chakra-ui/react';
+import axios from 'axios';
 
 interface Reservation {
   _id: string;
@@ -30,21 +31,20 @@ const InstructorProfile: React.FC<InstructorProfileProps> = ({ instructorId }) =
   useEffect(() => {
     const fetchReservations = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/reservations');
-        
-        if (!response.ok) {
+        const response = await axios.get('http://localhost:3000/api/reservations');
+
+        if (response.status !== 200) {
           throw new Error('Response not ok');
         }
-    
-        const data = await response.json();
-        setReservations(data);
+
+        setReservations(response.data);
       } catch (error) {
         console.error('Error fetching reservations:', error);
       }
     };
 
     fetchReservations();
-  }, []); // Empty dependency array to fetch data only once
+  }, []);
 
   const handleSelectReservation = (reservation: Reservation) => {
     setSelectedReservation(reservation);
@@ -58,7 +58,6 @@ const InstructorProfile: React.FC<InstructorProfileProps> = ({ instructorId }) =
         });
 
         if (response.ok) {
-          // Update the reservations list
           const updatedReservations = reservations.map((reservation) => {
             if (reservation._id === selectedReservation._id) {
               return { ...reservation, instructorId: instructorId };
@@ -79,38 +78,39 @@ const InstructorProfile: React.FC<InstructorProfileProps> = ({ instructorId }) =
 
   return (
     <Flex direction="column" align="center">
-      <Heading as="h1" size="xl" my={4}>
-        Instructor Profile
-      </Heading>
-      <List>
+    <Heading as="h1" size="xl" my={4}>
+      Instructor Profile
+    </Heading>
+    <List>
+      <Flex wrap="wrap" justify="center">
         {reservations.map((reservation) => (
-          <ListItem key={reservation._id}>
-            <Flex justify="space-between" align="center">
-              <Box>
-                <Text>{reservation.firstName} {reservation.lastName}</Text>
-                <Text>{reservation.activity}</Text>
-                <Text>{reservation.date} {reservation.time}</Text>
-              </Box>
+          <Box key={reservation._id} className="reservation-item" p={4} m={2} borderWidth="1px" borderRadius="md">
+            <Flex direction="column" align="center">
+              <Text fontWeight="bold">{reservation.activity}</Text>
+              <Text>{reservation.firstName} {reservation.lastName}</Text>
+              <Text>Date: {reservation.date}</Text>
+              <Text>Time: {reservation.time}</Text>
               {reservation.instructorId === instructorId ? (
-                <Text>Responsibility: Yours</Text>
+                <Text color="green.500">Responsibility: Yours</Text>
               ) : (
                 <Button
-                  colorScheme="blue"
-                  onClick={() => handleSelectReservation(reservation)}
-                >
+                colorScheme={reservation.instructorId === instructorId ? "green" : "blue"}
+                onClick={() => handleSelectReservation(reservation)}>
                   Mark as Responsibility
                 </Button>
               )}
             </Flex>
-          </ListItem>
+          </Box>
         ))}
-      </List>
-      {selectedReservation && (
-        <Box my={4}>
-          <Text>Selected Reservation:</Text>
-          <Text>{selectedReservation.firstName} {selectedReservation.lastName}</Text>
+      </Flex>
+    </List>
+    {selectedReservation && (
+      <Box my={4}>
+          <Text fontWeight="bold">Selected Reservation:</Text>
           <Text>{selectedReservation.activity}</Text>
-          <Text>{selectedReservation.date} {selectedReservation.time}</Text>
+          <Text>{selectedReservation.firstName} {selectedReservation.lastName}</Text>
+          <Text>Date: {selectedReservation.date}</Text>
+          <Text>Time: {selectedReservation.time}</Text>
           <Button colorScheme="blue" onClick={handleMarkAsResponsibility}>
             Mark as Responsibility
           </Button>

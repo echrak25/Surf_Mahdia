@@ -18,7 +18,7 @@ connectToDb((err) => {
     console.log('Connected to the database');
     app.use('/api/reservations', reservationRoutes);
     app.use('/api/ins', insRoutes);
-  
+    app.use(cors());
     const server = app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });

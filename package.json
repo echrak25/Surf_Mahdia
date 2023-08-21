@@ -15,6 +15,7 @@
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
     "@types/react-slick": "^0.23.10",
+    "axios": "^1.4.0",
     "body-parser": "^1.20.2",
     "caniuse-lite": "^1.0.30001449",
     "cors": "^2.8.5",

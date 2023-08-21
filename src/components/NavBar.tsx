@@ -42,12 +42,13 @@ export default function NavBar() {
       },
       body: JSON.stringify({ email, password }), 
     });
-
+    console.log('Email:', email); 
+    console.log('Password:', password);
     if (response.ok) {
       const data = await response.json();
       const token = data.token;
       localStorage.setItem('authToken', token);
-      window.location.href = '/instructor/profile'; 
+      window.location.href = '/ins/profile'; 
     } else {
       console.error('Login failed');
     }
