@@ -19,6 +19,7 @@ import {
 
 
 export default function KiteSurf() {
+  const img = require("../assets/ki.jpg");
   return (
     <Container maxW={'7xl'}>
       <SimpleGrid
@@ -31,7 +32,7 @@ export default function KiteSurf() {
             rounded={'md'}
             alt={'product image'}
             src={
-              'https://www.mahdiasurf.com/.cm4all/mediadb/WhatsApp%20Image%202022-08-20%20at%2018.00.48%20%282%29.jpeg'
+              img
             }
             fit={'cover'}
             align={'center'}
@@ -114,8 +115,6 @@ export default function KiteSurf() {
               </List>
             </Box>
           </Stack>
-
-          {/* Use the Link component to navigate to the Reservation page */}
           <Button
             as={Link}
             to="/reservation"

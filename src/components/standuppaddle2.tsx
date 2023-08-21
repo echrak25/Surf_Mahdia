@@ -19,6 +19,7 @@ import {
 import { Link } from 'react-router-dom';
   
   export default function Standuppaddle() {
+    const img =  require("../assets/picture-2600.jpg");
     return (
       <Container maxW={'7xl'}>
         <SimpleGrid
@@ -30,7 +31,7 @@ import { Link } from 'react-router-dom';
               rounded={'md'}
               alt={'product image'}
               src={
-                'https://www.mahdiasurf.com/.cm4all/mediadb/.dome%205.22-52.jpg/picture-2600'
+                img
               }
               fit={'cover'}
               align={'center'}
