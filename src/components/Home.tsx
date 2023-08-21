@@ -1,7 +1,7 @@
 import { Container, Box, Stack, Flex, Button, Text, VStack, useBreakpointValue } from '@chakra-ui/react';
 import { Heading, Icon } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import About from "./About";
-import Reservation from "./Reservation";
 import Activities from "./Activities";
 import { GiWaveSurfer,GiPaddles,GiPaperBoat } from 'react-icons/gi';
 function Home() {
@@ -37,6 +37,8 @@ function Home() {
           </Text>
           <Stack direction="row" align="center">
             <Button
+             as={Link} 
+             to="/reservation" 
               bg="blue.400"
               rounded="full"
               color="white"
@@ -45,6 +47,8 @@ function Home() {
               Make Reservation
             </Button>
             <Button
+            as={Link} 
+            to="/Pricing" 
               bg="whiteAlpha.300"
               rounded="full"
               color="white"
@@ -67,9 +71,9 @@ function Home() {
         </Stack>
         <Container maxW={'5xl'} mt={12}>
           <Flex flexWrap="wrap" gridGap={6} justify="center">
-          <Activities heading={"kitesurf"} description={"Riding a board while being pulled by a kite"} icon={<Icon as={GiWaveSurfer} w={10} h={10} color="blue.400" />} />
-          <Activities heading={"Stand-up Paddle"} description={"Standing on a board and paddling"} icon={<Icon as={GiPaddles} w={10} h={10} color="blue.400" />} />
-          <Activities heading={"kayack"} description={"Paddling a small boat on water."} icon={<Icon as={GiPaperBoat} w={10} h={10} color="blue.400" />} />
+          <Activities link="/kitesurf" heading={"kitesurf"} description={"Riding a board while being pulled by a kite"} icon={<Icon as={GiWaveSurfer} w={10} h={10} color="blue.400" />} />
+          <Activities link="/Stand-up-paddle" heading={"Stand-up Paddle"} description={"Standing on a board and paddling"} icon={<Icon as={GiPaddles} w={10} h={10} color="blue.400" />} />
+          <Activities link="/kayak" heading={"kayack"} description={"Paddling a small boat on water."} icon={<Icon as={GiPaperBoat} w={10} h={10} color="blue.400" />} />
 
           </Flex>
         </Container>

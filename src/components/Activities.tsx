@@ -1,7 +1,8 @@
+import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Box,
   Button,
-  Container,
   Flex,
   Heading,
   Stack,
@@ -15,6 +16,7 @@ interface CardProps {
   heading: string;
   description: string;
   icon: ReactElement;
+  link: string; // Add the link property
 }
 
 function Activities(props: CardProps) {
@@ -41,15 +43,15 @@ function Activities(props: CardProps) {
             {props.icon}
           </Flex>
           <Box mt={2} textAlign="center">
-  <Heading size="md" mb={1}>
-    {props.heading}
-  </Heading>
-  <Text fontSize="sm">
-    {props.description}
-  </Text>
-</Box>
+            <Heading size="md" mb={1}>
+              {props.heading}
+            </Heading>
+            <Text fontSize="sm">
+              {props.description}
+            </Text>
+          </Box>
 
-          <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
+          <Button as={RouterLink} to={props.link} variant={'link'} colorScheme={'blue'} size={'sm'}>
             Learn more
           </Button>
         </Stack>

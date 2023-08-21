@@ -34,16 +34,18 @@ import {
 import { NavLink as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 
-export default function NavBar() {
-  const [instructors, setInstructors] = useState<Instructor[]>([]);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);
-  const { isOpen, onOpen, onToggle } = useDisclosure();
-  const { colorMode, toggleColorMode } = useColorMode();
-  const { isOpen: isOpenSignin, onOpen: onOpenSignin, onClose: onCloseSignin } = useDisclosure();
-  const [showPassword, setShowPassword] = useState(false);
-  const [loggedInInstructor, setLoggedInInstructor] = useState(false); // Add this state
+
+  export default function NavBar() {
+    const [instructors, setInstructors] = useState<Instructor[]>([]);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loggedIn, setLoggedIn] = useState(false);
+    const { isOpen, onOpen, onToggle } = useDisclosure();
+    const { colorMode, toggleColorMode } = useColorMode();
+    const { isOpen: isOpenSignin, onOpen: onOpenSignin, onClose: onCloseSignin } = useDisclosure();
+    const [showPassword, setShowPassword] = useState(false);
+    const [loggedInInstructor, setLoggedInInstructor] = useState(false);
+    const [loginError, setLoginError] = useState<string | null>(null);
   interface Instructor {
     _id: string;
     email: string;
@@ -76,7 +78,7 @@ export default function NavBar() {
         window.location.href = '/instructors/profile'
         onCloseSignin();
       } else {
-        console.error('Invalid email or password');
+        setLoginError('Invalid email or password'); // Set error message
       }
     } catch (error) {
       console.error('Error logging in:', error);
@@ -150,17 +152,21 @@ export default function NavBar() {
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
+              <Stack direction="row" spacing={2}>
               <Input
-    type={showPassword ? "text" : "password"}
-    value={password}
-    onChange={(e) => setPassword(e.target.value)} 
-  />
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
               <IconButton
-                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
                 icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
                 onClick={() => setShowPassword(!showPassword)}
                 mt={1}
               />
+            </Stack>
+  {loginError && <div style={{ color: 'red' }}>{loginError}</div>}
+              
             </FormControl>
           
     <Button

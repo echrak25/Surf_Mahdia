@@ -1,7 +1,7 @@
-import React from 'react';
+
 import {
   Box,
-  chakra,
+
   Container,
   Stack,
   Text,
@@ -16,8 +16,6 @@ import {
   List,
   ListItem,
 } from '@chakra-ui/react';
-import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
-import { MdLocalShipping } from 'react-icons/md';
 import { Link } from 'react-router-dom';
   
   export default function Standuppaddle() {
@@ -113,8 +111,8 @@ We kindly ask you to contact us by telephone or Instagram for all details about 
             </Stack>
   
             <Button
-            as={Link} // Use Link instead of Button to navigate to Reservation component
-            to="/reservation" // Specify the destination route
+            as={Link} 
+            to="/reservation" 
             rounded={'none'}
             w={'full'}
             mt={8}

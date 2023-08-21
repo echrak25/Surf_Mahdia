@@ -24,14 +24,14 @@ export const App = () => (
  <NavBar></NavBar> 
  <Routes>
  <Route path="/" element={<Home/>}/>
-      <Route path="Stand-up-paddle" element={<Standuppaddle></Standuppaddle>}/>
+      
       <Route path="Home" element={<Home/>}/>
       <Route path="KiteSurf" element={<KiteSurf></KiteSurf>}/>
       <Route path="Stand-up-paddle" element={<Standuppaddle></Standuppaddle>}/>
       <Route path="Pricing" element={<Pricing></Pricing>}/>
       <Route path="Reservation" element={<Reservation></Reservation>}/>
       <Route path="kayak" element={<Kayak></Kayak>}/>
-      <Route path="/instructors/profile" element={<InstructorProfile instructorId={"64e0b894743e0cb48c3e4492"}></InstructorProfile>} />
+      <Route path="/instructors/profile" element={<InstructorProfile></InstructorProfile>} />
   </Routes>
   <Footer></Footer>
   </ChakraProvider>
