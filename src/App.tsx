@@ -31,7 +31,7 @@ export const App = () => (
       <Route path="Pricing" element={<Pricing></Pricing>}/>
       <Route path="Reservation" element={<Reservation></Reservation>}/>
       <Route path="kayak" element={<Kayak></Kayak>}/>
-      <Route path="/ins/profile" element={<InstructorProfile instructorId={"64e0b894743e0cb48c3e4492"}></InstructorProfile>} />
+      <Route path="/instructors/profile" element={<InstructorProfile instructorId={"64e0b894743e0cb48c3e4492"}></InstructorProfile>} />
   </Routes>
   <Footer></Footer>
   </ChakraProvider>

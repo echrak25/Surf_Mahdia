@@ -1,11 +1,12 @@
 
+import React, { useState, useEffect } from 'react';
+
 import {
   FormControl,
   FormLabel,
   Input,
   Box,
   Flex,
-  Text,
   Button,
   Stack,
   Modal,
@@ -17,45 +18,70 @@ import {
   useColorModeValue,
   useDisclosure,
   Collapse,
-  Link,useColorMode,IconButton,ModalCloseButton
+  IconButton,
+  Link,
+  useColorMode,
+  ModalCloseButton,
 } from '@chakra-ui/react';
-import { useState } from 'react';
-import { CloseIcon, HamburgerIcon, MoonIcon, SunIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import {
+  CloseIcon,
+  HamburgerIcon,
+  MoonIcon,
+  SunIcon,
+  ViewIcon,
+  ViewOffIcon,
+} from '@chakra-ui/icons';
 import { NavLink as RouterLink } from 'react-router-dom';
-
-
+import axios from 'axios';
 
 export default function NavBar() {
-  const [email, setEmail] = useState('');  
-  const [password, setPassword] = useState(''); 
+  const [instructors, setInstructors] = useState<Instructor[]>([]);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
   const { isOpen, onOpen, onToggle } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen: isOpenSignin, onOpen: onOpenSignin, onClose: onCloseSignin } = useDisclosure();
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleLogin = async () => {
-  try {
-    const response = await fetch('/api/ins/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }), 
-    });
-    console.log('Email:', email); 
-    console.log('Password:', password);
-    if (response.ok) {
-      const data = await response.json();
-      const token = data.token;
-      localStorage.setItem('authToken', token);
-      window.location.href = '/ins/profile'; 
-    } else {
-      console.error('Login failed');
-    }
-  } catch (error) {
-    console.error('Error logging in:', error);
+  const [loggedInInstructor, setLoggedInInstructor] = useState(false); // Add this state
+  interface Instructor {
+    _id: string;
+    email: string;
+    password: string;
+    firstName?: string;
+    lastName?: string;
   }
-};
+  useEffect(() => {
+    const fetchInstructors = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/instructors');
+        if (response.status === 200) {
+          setInstructors(response.data);
+        }
+      } catch (error) {
+        console.log(instructors);
+        console.error('Error fetching instructors:', error);
+      }
+    };
+  
+    fetchInstructors();
+  }, []);
+  
+  const handleLogin = async () => {
+    try {
+      const loggedInInstructor = instructors.find((instructor) => instructor.email === email && instructor.password === password);
+   if (loggedInInstructor) {
+        setLoggedIn(true);
+        setLoggedInInstructor(true);
+        window.location.href = '/instructors/profile'
+        onCloseSignin();
+      } else {
+        console.error('Invalid email or password');
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+    }
+  };
   return (
     <Box>
       <Flex
@@ -68,15 +94,10 @@ export default function NavBar() {
         borderStyle={'solid'}
         borderColor={useColorModeValue('gray.100', 'gray.100')}
         align={'center'}>
-        <Flex
-          flex={{ base: 1, md: 'auto' }}
-          ml={{ base: -2 }}
-          display={{ base: 'flex', md: 'none' }}>
+        <Flex flex={{ base: 1, md: 'auto' }} ml={{ base: -2 }} display={{ base: 'flex', md: 'none' }}>
           <IconButton
             onClick={onToggle}
-            icon={
-              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
-            }
+            icon={isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
             variant={'ghost'}
             aria-label={'Toggle Navigation'}
           />
@@ -88,12 +109,9 @@ export default function NavBar() {
           </Flex>
         </Flex>
 
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify={'flex-end'}
-          direction={'row'}
-          spacing={6}>
-          <Button onClick={onOpenSignin}
+        <Stack flex={{ base: 1, md: 0 }} justify={'flex-end'} direction={'row'} spacing={6}>
+          <Button
+            onClick={onOpenSignin}
             display={{ base: 'none', md: 'inline-flex' }}
             fontSize={'sm'}
             fontWeight={600}
@@ -104,6 +122,8 @@ export default function NavBar() {
             }}>
             Sign In
           </Button>
+
+
           
           <Button onClick={toggleColorMode}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
@@ -142,16 +162,17 @@ export default function NavBar() {
                 mt={1}
               />
             </FormControl>
-            <Button
-              bg={'blue.400'}
-              color={'white'}
-              _hover={{
-                bg: 'blue.500',
-              }}
-              onClick={handleLogin}
-            >
-              Sign in
-            </Button>
+          
+    <Button
+      bg={'blue.400'}
+      color={'white'}
+      _hover={{
+        bg: 'blue.500',
+      }}
+      onClick={handleLogin}
+    >
+      Sign in
+    </Button>
           </ModalBody>
           <ModalFooter>
             <Button bgColor={'blue.100'} mr={3} onClick={onCloseSignin}>
