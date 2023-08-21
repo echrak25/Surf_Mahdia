@@ -21,7 +21,7 @@ import {
   IconButton,
   Link,
   useColorMode,
-  ModalCloseButton,
+  ModalCloseButton,Heading,
 } from '@chakra-ui/react';
 import {
   CloseIcon,
@@ -143,7 +143,10 @@ import axios from 'axios';
           <ModalHeader>Sign in</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {/* Sign in form */}
+          <Heading color="red"  mb={4} fontWeight="bold" fontSize="3xl" textAlign="center" mx="auto">
+  For instructors only
+</Heading>
+
             <FormControl id="email">
               <FormLabel>Email address</FormLabel>
               <Input type="email"
@@ -169,7 +172,11 @@ import axios from 'axios';
               
             </FormControl>
           
-    <Button
+    
+          </ModalBody>
+          <ModalFooter>
+  <Flex justify="space-between" w="100%">
+  <Button
       bg={'blue.400'}
       color={'white'}
       _hover={{
@@ -179,12 +186,11 @@ import axios from 'axios';
     >
       Sign in
     </Button>
-          </ModalBody>
-          <ModalFooter>
-            <Button bgColor={'blue.100'} mr={3} onClick={onCloseSignin}>
-              Close
-            </Button>
-          </ModalFooter>
+    <Button bgColor={'blue.100'} mr={3} onClick={onCloseSignin}>
+      Close
+    </Button>
+  </Flex>
+</ModalFooter>
         </ModalContent>
       </Modal>
     </Box>
