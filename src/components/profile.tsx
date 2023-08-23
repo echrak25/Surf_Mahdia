@@ -30,8 +30,15 @@ const InstructorProfile: React.FC = () => {
           throw new Error('Response not ok');
         }
 
-        // Sort reservations by date and time
-        const sortedReservations = response.data.sort((a: Reservation, b: Reservation) => {
+        const currentDate = Date.now();
+
+        // Filter and sort reservations by date and time
+        const filteredReservations = response.data.filter((reservation: Reservation) => {
+          const reservationDateTime = new Date(reservation.date + ' ' + reservation.time).getTime();
+          return reservationDateTime >= currentDate;
+        });
+
+        const sortedReservations = filteredReservations.sort((a: Reservation, b: Reservation) => {
           const dateComparison = a.date.localeCompare(b.date);
           if (dateComparison !== 0) {
             return dateComparison;

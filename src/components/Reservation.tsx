@@ -50,7 +50,7 @@ export default function Reservation() {
     setTimeError('');
 
     if (selectedDate <= currentDate) {
-      setDateError('Please select a date at least two days after the current date.');
+      setDateError('Please select a date at least one days after the current date.');
       return;
     }
 
