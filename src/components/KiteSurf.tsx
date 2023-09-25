@@ -64,15 +64,7 @@ export default function KiteSurf() {
                 fontSize={'2xl'}
                 fontWeight={'300'}
               >
-                Dzira (English lagoon) is the name of our fav spot, located between Mahdia and
-                Monastir, offers you a multitude of possibilities to develop your kitesurfing skill
-                independently from your riding level.
-                You basically just need to call us to book your course, or to rent equipment:
-                "Check spot here": constant wind and flat water. very beginner friendly,
-                "Best wind": Mai 5/7 days 25°C, South East. December 5/7 days North, 18°C,
-                "Infrastructure": reachable by car, parking everywhere.,
-                "Facility": lounge / coffee shop / restaurant available.,
-                "Hotels": 20 minutes away.
+                ite surfing is an absolute thrill – imagine harnessing the wind's power to skim across the water, your kite soaring above. It's a rush of adrenaline, a dance with nature, and a passport to adventure. Whether you're a beginner or a seasoned water enthusiast, kite surfing promises an unforgettable experience and a sense of freedom like no other. Join us, ride the wind, and let the sea set you free!
               </Text>
             </VStack>
 

@@ -21,7 +21,7 @@ import {
   IconButton,
   Link,
   useColorMode,
-  ModalCloseButton,Heading,
+  ModalCloseButton, Heading,
 } from '@chakra-ui/react';
 import {
   CloseIcon,
@@ -35,17 +35,17 @@ import { NavLink as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 
 
-  export default function NavBar() {
-    const [instructors, setInstructors] = useState<Instructor[]>([]);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [loggedIn, setLoggedIn] = useState(false);
-    const { isOpen, onOpen, onToggle } = useDisclosure();
-    const { colorMode, toggleColorMode } = useColorMode();
-    const { isOpen: isOpenSignin, onOpen: onOpenSignin, onClose: onCloseSignin } = useDisclosure();
-    const [showPassword, setShowPassword] = useState(false);
-    const [loggedInInstructor, setLoggedInInstructor] = useState(false);
-    const [loginError, setLoginError] = useState<string | null>(null);
+export default function NavBar() {
+  const [instructors, setInstructors] = useState<Instructor[]>([]);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
+  const { isOpen, onOpen, onToggle } = useDisclosure();
+  const { colorMode, toggleColorMode } = useColorMode();
+  const { isOpen: isOpenSignin, onOpen: onOpenSignin, onClose: onCloseSignin } = useDisclosure();
+  const [showPassword, setShowPassword] = useState(false);
+  const [loggedInInstructor, setLoggedInInstructor] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
   interface Instructor {
     _id: string;
     email: string;
@@ -65,14 +65,14 @@ import axios from 'axios';
         console.error('Error fetching instructors:', error);
       }
     };
-  
+
     fetchInstructors();
   }, []);
-  
+
   const handleLogin = async () => {
     try {
       const loggedInInstructor = instructors.find((instructor) => instructor.email === email && instructor.password === password);
-   if (loggedInInstructor) {
+      if (loggedInInstructor) {
         setLoggedIn(true);
         setLoggedInInstructor(true);
         window.location.href = '/instructors/profile'
@@ -126,13 +126,13 @@ import axios from 'axios';
           </Button>
 
 
-          
+
           <Button onClick={toggleColorMode}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           </Button>
         </Stack>
       </Flex>
-      
+
       <Collapse in={isOpen} animateOpacity>
         <MobileNav />
       </Collapse>
@@ -143,154 +143,155 @@ import axios from 'axios';
           <ModalHeader>Sign in</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-          <Heading color="red"  mb={4} fontWeight="bold" fontSize="3xl" textAlign="center" mx="auto">
-  For instructors only
-</Heading>
+            <Heading color="blue.500" mb={4} fontWeight="bold" fontSize="3xl" textAlign="center" mx="auto">
+              For instructors only
+            </Heading>
 
             <FormControl id="email">
               <FormLabel>Email address</FormLabel>
               <Input type="email"
-    value={email}
-    onChange={(e) => setEmail(e.target.value)} />
+                value={email}
+                onChange={(e) => setEmail(e.target.value)} />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
               <Stack direction="row" spacing={2}>
-              <Input
-                type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <IconButton
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
-                icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                onClick={() => setShowPassword(!showPassword)}
-                mt={1}
-              />
-            </Stack>
-  {loginError && <div style={{ color: 'red' }}>{loginError}</div>}
-              
+                <Input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <IconButton
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                  onClick={() => setShowPassword(!showPassword)}
+                  mt={1}
+                />
+              </Stack>
+              {loginError && <div style={{ color: 'red' }}>{loginError}</div>}
+
             </FormControl>
-          
-    
+
+
           </ModalBody>
           <ModalFooter>
-  <Flex justify="space-between" w="100%">
-  <Button
-      bg={'blue.400'}
-      color={'white'}
-      _hover={{
-        bg: 'blue.500',
-      }}
-      onClick={handleLogin}
-    >
-      Sign in
-    </Button>
-    <Button bgColor={'blue.100'} mr={3} onClick={onCloseSignin}>
-      Close
-    </Button>
-  </Flex>
-</ModalFooter>
+            <Flex justify="space-between" w="100%">
+              <Button
+                bg={'blue.400'}
+                color={'white'}
+                _hover={{
+                  bg: 'blue.500',
+                }}
+                onClick={handleLogin}
+              >
+                Sign in
+              </Button>
+              <Button bgColor={'blue.100'} mr={3} onClick={onCloseSignin}>
+                Close
+              </Button>
+            </Flex>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </Box>
   );
 }
 
-  interface NavItem {
-    label: string;
-    href: string;
-  }
-  
-  const NAV_ITEMS: Array<NavItem> = [
-    {
-      label: 'Home',
-      href: '/',
-    },
-   
-    
-    {
-      label: 'KiteSurf',
-      href: '/KiteSurf',
-    },
-    {
-      label: 'Stand-up-paddle ',
-      href: '/Stand-up-paddle ',
-    },
-    {
-      label: 'kayak',
-      href: '/Kayak',
-      
-    },
-    
-   {
-      label: 'Pricing',
-      href: '/Pricing',}
-      
-  ];
+interface NavItem {
+  label: string;
+  href: string;
+}
 
-  const DesktopNav = () => {
-    const linkColor = useColorModeValue('gray.600', 'white');
-    const linkHoverColor = useColorModeValue('blue.400', 'blue.100');
-  
-    return (
-      <Stack direction="row" spacing={4}>
-        {NAV_ITEMS.map((navItem) => (
-          <Box key={navItem.label}>
-            <Link
-              as={RouterLink}
-              to={navItem.href as string}
-              color={linkColor}
-              _hover={{
-                color: linkHoverColor,
-                textDecoration: 'underline',
-              }}
-            >
-              {navItem.label}
-            </Link>
-          </Box>
-        ))}
-      </Stack>
-    );
-  };
+const NAV_ITEMS: Array<NavItem> = [
+  {
+    label: 'Home',
+    href: '/',
+  },
+
+
+  {
+    label: 'KiteSurf',
+    href: '/KiteSurf',
+  },
+  {
+    label: 'Stand-up-paddle ',
+    href: '/Stand-up-paddle ',
+  },
+  {
+    label: 'kayak',
+    href: '/Kayak',
+
+  },
+
+  {
+    label: 'Pricing',
+    href: '/Pricing',
+  }
+
+];
+
+const DesktopNav = () => {
+  const linkColor = useColorModeValue('gray.600', 'white');
+  const linkHoverColor = useColorModeValue('blue.400', 'blue.100');
+
+  return (
+    <Stack direction="row" spacing={4}>
+      {NAV_ITEMS.map((navItem) => (
+        <Box key={navItem.label}>
+          <Link
+            as={RouterLink}
+            to={navItem.href as string}
+            color={linkColor}
+            _hover={{
+              color: linkHoverColor,
+              textDecoration: 'underline',
+            }}
+          >
+            {navItem.label}
+          </Link>
+        </Box>
+      ))}
+    </Stack>
+  );
+};
 
 <>
   <DesktopNav />
-  </>
-  const MobileNav = () => {
-    return (
-      <Stack
-        bg={useColorModeValue('white', 'gray.800')}
-        p={4}
-        display={{ md: 'none' }}>
-        {NAV_ITEMS.map((navItem) => (
-          <MobileNavItem key={navItem.label} {...navItem} />
-        ))}
-      </Stack>
-    );
-  };
-  
-  const MobileNavItem = ({ label, href }: NavItem) => {
-    const { isOpen, onToggle } = useDisclosure();
-  
-    return (
-      <Stack spacing={4} onClick={onToggle}>
-        <Flex
-          py={2}
-          as={Link}
-          link={href ?? '#'}
-          justify={'space-between'}
-          align={'center'}
-          _hover={{
-            textDecoration: 'none',
-            color: useColorModeValue('blue.400', 'blue.400')
-          }}>
-             <RouterLink 
-                to={href }
-            color={useColorModeValue('gray.600', 'gray.200')}
-              >{label}</RouterLink>
-        </Flex>
-      </Stack>
-    );
-  };
-  
+</>
+const MobileNav = () => {
+  return (
+    <Stack
+      bg={useColorModeValue('white', 'gray.800')}
+      p={4}
+      display={{ md: 'none' }}>
+      {NAV_ITEMS.map((navItem) => (
+        <MobileNavItem key={navItem.label} {...navItem} />
+      ))}
+    </Stack>
+  );
+};
+
+const MobileNavItem = ({ label, href }: NavItem) => {
+  const { isOpen, onToggle } = useDisclosure();
+
+  return (
+    <Stack spacing={4} onClick={onToggle}>
+      <Flex
+        py={2}
+        as={Link}
+        link={href ?? '#'}
+        justify={'space-between'}
+        align={'center'}
+        _hover={{
+          textDecoration: 'none',
+          color: useColorModeValue('blue.400', 'blue.400')
+        }}>
+        <RouterLink
+          to={href}
+          color={useColorModeValue('gray.600', 'gray.200')}
+        >{label}</RouterLink>
+      </Flex>
+    </Stack>
+  );
+};
+

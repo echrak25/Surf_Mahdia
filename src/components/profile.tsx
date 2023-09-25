@@ -153,7 +153,7 @@ const InstructorProfile: React.FC = () => {
   return (
     <Flex direction="column" align="center">
       <Heading as="h1" size="xl" my={4}>
-        Instructor Profile
+        Instructors Profile
       </Heading>
       <Flex justify="center" mb={4}>
         <Select
