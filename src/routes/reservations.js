@@ -38,15 +38,17 @@ router.get('/:id', async (req, res) => {
 
 // Create a new reservation
 router.post('/', async (req, res) => {
-    const Reservation={
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      activity,
-      date,
-      time,
-    } = req.body;
+  const {
+    firstName,
+    lastName,
+    email,
+    phoneNumber,
+    activity,
+    date,
+    time,
+    status, // Include status in destructuring
+  } = req.body;
+  
 
     const db = getDb();
     db.collection('reservations').insertOne(Reservation)

@@ -29,6 +29,12 @@ const reservationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  status: {
+    type: String,
+    enum: ['confirmed', 'not confirmed', 'cancelled', 'not cancelled'],
+    default: 'not confirmed', // You can set a default value if needed
+    required: true,
+  },
 });
 
 const Reservation = mongoose.model('Reservation', reservationSchema);

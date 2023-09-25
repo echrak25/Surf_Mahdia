@@ -60,14 +60,20 @@ export default function Reservation() {
     }
 
     try {
+      // Add the status field to your formData object
+      const formDataWithStatus = {
+        ...formData,
+        status: 'not confirmed', // Set the initial status as 'not confirmed' or any other default value you prefer
+      };
+    
       const response = await fetch('http://localhost:3000/api/reservations', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formDataWithStatus), // Send the updated formData object
       });
-
+    
       if (response.ok) {
         // Reservation created successfully
         console.log('Reservation created!');
@@ -92,7 +98,7 @@ export default function Reservation() {
     } catch (error) {
       console.error('Error:', error);
     }
-  };
+  }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prevFormData) => ({
