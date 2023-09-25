@@ -20,6 +20,7 @@ import {
   Collapse,
   IconButton,
   Link,
+  Image,
   useColorMode,
   ModalCloseButton, Heading,
 } from '@chakra-ui/react';
@@ -34,8 +35,8 @@ import {
 import { NavLink as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 
-
 export default function NavBar() {
+  const img = require("../assets/surfing_logo.jpg");
   const [instructors, setInstructors] = useState<Instructor[]>([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -104,8 +105,16 @@ export default function NavBar() {
             aria-label={'Toggle Navigation'}
           />
         </Flex>
-
+        <Image
+          rounded={'md'}
+          alt={'logo'}
+          src={img} // Remplacez 'logoImage' par votre variable d'image réelle
+          h={90} // Augmentez la hauteur de l'image (par exemple, h={12})
+          w={90}
+          ml={70} // Ajustez la marge gauche pour positionner l'image à gauche (par exemple, ml={4})
+        />
         <Flex flex={{ base: 1 }} justify={{ base: 'start', md: 'center' }}>
+
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
           </Flex>

@@ -64,7 +64,12 @@ const InstructorProfile: React.FC = () => {
 
     return reservations.filter((reservation) => reservation.status === statusFilter);
   };
-
+  const compareReservations = (a: Reservation, b: Reservation) => {
+    const dateA = new Date(`${a.date}T${a.time}`);
+    const dateB = new Date(`${b.date}T${b.time}`);
+    return dateA.getTime() - dateB.getTime();
+  };
+  const sortedReservations = applyStatusFilter().slice().sort(compareReservations);
   const filteredReservations = applyStatusFilter();
 
   const handleConfirmReservation = async (reservationId: string) => {
@@ -170,7 +175,7 @@ const InstructorProfile: React.FC = () => {
       </Flex>
       <List>
         <Flex wrap="wrap" justify="center">
-          {filteredReservations.map((reservation) => (
+          {sortedReservations.map((reservation) => (
             <Box key={reservation._id} className="reservation-item" p={4} m={2} borderWidth="1px" borderRadius="md">
               <Flex direction="column" align="center">
                 <Text fontWeight="bold">{reservation.activity}</Text>
