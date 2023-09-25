@@ -128,7 +128,7 @@ const InstructorProfile: React.FC = () => {
             status: editedReservation.status,
           }
         );
-  
+
         if (response.status === 200) {
           // Update the local state with the edited reservation
           setReservations((prevReservations) =>
@@ -136,7 +136,7 @@ const InstructorProfile: React.FC = () => {
               reservation._id === editedReservation._id ? editedReservation : reservation
             )
           );
-  
+
           // Close the modal
           setIsEditing(false);
         } else {
@@ -147,8 +147,8 @@ const InstructorProfile: React.FC = () => {
       }
     }
   };
- 
-  
+
+
 
   return (
     <Flex direction="column" align="center">
@@ -165,7 +165,7 @@ const InstructorProfile: React.FC = () => {
           <option value="not confirmed">Not Confirmed</option>
           <option value="confirmed">Confirmed</option>
           <option value="cancelled">Cancelled</option>
-          <option value="not cancelled">Not Cancelled</option>
+
         </Select>
       </Flex>
       <List>
@@ -177,7 +177,7 @@ const InstructorProfile: React.FC = () => {
                 <Text>{reservation.firstName} {reservation.lastName}</Text>
                 <Text>Date: {reservation.date}</Text>
                 <Text>Time: {reservation.time}</Text>
-                <Text>Status: {reservation.status}</Text>
+                <Text fontWeight="bold">Status: <span style={{ color: reservation.status === 'cancelled' ? 'red' : reservation.status === 'confirmed' ? 'green' : 'yellow' }}>{reservation.status}</span></Text>
                 <Flex mt={2}>
                   <Button
                     colorScheme={reservation.status === 'not confirmed' ? 'green' : 'gray'}
