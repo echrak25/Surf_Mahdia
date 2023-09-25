@@ -29,6 +29,7 @@ export default function Reservation() {
     activity: '',
     date: '',
     time: '',
+    status: 'not confirmed', // Set default status here
   });
 
   const [dateError, setDateError] = useState('');
@@ -65,7 +66,7 @@ export default function Reservation() {
         ...formData,
         status: 'not confirmed', // Set the initial status as 'not confirmed' or any other default value you prefer
       };
-    
+
       const response = await fetch('http://localhost:3000/api/reservations', {
         method: 'POST',
         headers: {
@@ -73,7 +74,7 @@ export default function Reservation() {
         },
         body: JSON.stringify(formDataWithStatus), // Send the updated formData object
       });
-    
+
       if (response.ok) {
         // Reservation created successfully
         console.log('Reservation created!');
@@ -90,6 +91,7 @@ export default function Reservation() {
           activity: '',
           date: '',
           time: '',
+          status: '',
         });
       } else {
         // Error in creating the reservation
@@ -214,35 +216,35 @@ export default function Reservation() {
                   <FormErrorMessage>{timeError}</FormErrorMessage>
                 </FormControl>
                 <HStack spacing={20}>
-                <Button
-                  colorScheme="blue"
-                  bg="blue.400"
-                  color="white"
-                  _hover={{ bg: 'blue.500' }}
-                  type="submit"
-                >
-                  Confirm
-                </Button>
-                <Button
-                  colorScheme="red"
-                  bg="red.900"
-                  color="white"
-                  _hover={{ bg: 'red' }}
-                  type="submit"
-                  onClick={() =>
-                    toast.info("You can call us on our numbers for more information! you can find them in home page ", {
-                      position: "top-right", // Customize notification position
-                      autoClose: 40000, // Set auto-close duration in milliseconds (40 seconds)
-                      hideProgressBar: true, // Hide the progress bar
-                      closeOnClick: true, // Close the notification when clicked
-                      pauseOnHover: true, // Pause the timer when hovered
-                      draggable: true, // Make the notification draggable
-                    })
-                  }
-                >
-                 get more informations
-                 
-                </Button>
+                  <Button
+                    colorScheme="blue"
+                    bg="blue.400"
+                    color="white"
+                    _hover={{ bg: 'blue.500' }}
+                    type="submit"
+                  >
+                    Confirm
+                  </Button>
+                  <Button
+                    colorScheme="red"
+                    bg="red.900"
+                    color="white"
+                    _hover={{ bg: 'red' }}
+                    type="submit"
+                    onClick={() =>
+                      toast.info("You can call us on our numbers for more information! you can find them in home page ", {
+                        position: "top-right", // Customize notification position
+                        autoClose: 40000, // Set auto-close duration in milliseconds (40 seconds)
+                        hideProgressBar: true, // Hide the progress bar
+                        closeOnClick: true, // Close the notification when clicked
+                        pauseOnHover: true, // Pause the timer when hovered
+                        draggable: true, // Make the notification draggable
+                      })
+                    }
+                  >
+                    get more informations
+
+                  </Button>
                 </HStack>
               </VStack>
             </form>

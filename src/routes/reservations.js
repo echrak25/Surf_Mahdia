@@ -1,7 +1,9 @@
+
 const express = require('express');
 const router = express.Router();
 const { ObjectId } = require('mongodb');
 const { getDb } = require('../db');
+const Reservation = require('../models/Reservation'); // Update the path as needed
 
 // Get all reservations
 router.get('/', async (req, res) => {
@@ -35,10 +37,8 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while fetching the reservation' });
   }
 });
-
-// Create a new reservation
 router.post('/', async (req, res) => {
-  const {
+  const Reservation = {
     firstName,
     lastName,
     email,
@@ -46,21 +46,20 @@ router.post('/', async (req, res) => {
     activity,
     date,
     time,
-    status, // Include status in destructuring
+    status,
   } = req.body;
-  
 
-    const db = getDb();
-    db.collection('reservations').insertOne(Reservation)
-.then(result => {
-  res.status(201).json(result);
-})
-.catch(err => {
-  res.status(500).json({ error: 'Could not create a new document' });
-});
+  const db = getDb();
+  db.collection('reservations').insertOne(Reservation)
+    .then(result => {
+      res.status(201).json(result);
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Could not create a new document' });
+    });
 });
 
-// Update a reservation
+
 router.put('/:id', async (req, res) => {
   try {
     const db = getDb();
@@ -80,20 +79,5 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// Delete a reservation
-router.delete('/:id', async (req, res) => {
-  try {
-    const db = getDb();
-    const result = await db.collection('reservations').deleteOne({ _id: new ObjectId(req.params.id) });
-
-    if (result.deletedCount === 0) {
-      return res.status(404).json({ error: 'Reservation not found.' });
-    }
-
-    res.sendStatus(204);
-  } catch (error) {
-    res.status(500).json({ error: 'An error occurred while deleting the reservation.' });
-  }
-});
 
 module.exports = router;
