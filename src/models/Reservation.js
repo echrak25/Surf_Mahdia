@@ -29,10 +29,14 @@ const reservationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  numberOfPeople: {
+    type: Number, // Assuming the number of people is an integer
+    required: true,
+  },
   status: {
     type: String,
     enum: ['confirmed', 'not confirmed', 'cancelled', 'not cancelled'],
-    default: 'not confirmed', // You can set a default value if needed
+    default: 'not confirmed',
     required: true,
   },
 });

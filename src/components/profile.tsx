@@ -29,9 +29,13 @@ interface Reservation {
   time: string;
   instructorId: string;
   status: string;
+  numberOfPeople: number;
 }
 
+const activityOptions = ['paddle', 'surf', 'kitesurf'];
+
 const InstructorProfile: React.FC = () => {
+  const [selectedActivity, setSelectedActivity] = useState<string>('');
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [statusFilter, setStatusFilter] = useState('');
   const [isEditing, setIsEditing] = useState(false);
@@ -58,17 +62,28 @@ const InstructorProfile: React.FC = () => {
   }, []);
 
   const applyStatusFilter = () => {
+    const threeMonthsAgo = new Date();
+    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+
     if (!statusFilter) {
-      return reservations;
+      return reservations.filter((reservation) => {
+        const reservationDate = new Date(`${reservation.date}T${reservation.time}`);
+        return reservationDate >= threeMonthsAgo;
+      });
     }
 
-    return reservations.filter((reservation) => reservation.status === statusFilter);
+    return reservations.filter((reservation) => {
+      const reservationDate = new Date(`${reservation.date}T${reservation.time}`);
+      return reservation.status === statusFilter && reservationDate >= threeMonthsAgo;
+    });
   };
+
   const compareReservations = (a: Reservation, b: Reservation) => {
     const dateA = new Date(`${a.date}T${a.time}`);
     const dateB = new Date(`${b.date}T${b.time}`);
     return dateA.getTime() - dateB.getTime();
   };
+
   const sortedReservations = applyStatusFilter().slice().sort(compareReservations);
   const filteredReservations = applyStatusFilter();
 
@@ -127,9 +142,10 @@ const InstructorProfile: React.FC = () => {
           {
             firstName: editedReservation.firstName,
             lastName: editedReservation.lastName,
-            activity: editedReservation.activity,
+            activity: selectedActivity || editedReservation.activity,
             date: editedReservation.date,
             time: editedReservation.time,
+            numberOfPeople: editedReservation.numberOfPeople,
             status: editedReservation.status,
           }
         );
@@ -153,8 +169,6 @@ const InstructorProfile: React.FC = () => {
     }
   };
 
-
-
   return (
     <Flex direction="column" align="center">
       <Heading as="h1" size="xl" my={4}>
@@ -170,7 +184,6 @@ const InstructorProfile: React.FC = () => {
           <option value="not confirmed">Not Confirmed</option>
           <option value="confirmed">Confirmed</option>
           <option value="cancelled">Cancelled</option>
-
         </Select>
       </Flex>
       <List>
@@ -180,6 +193,7 @@ const InstructorProfile: React.FC = () => {
               <Flex direction="column" align="center">
                 <Text fontWeight="bold">{reservation.activity}</Text>
                 <Text>{reservation.firstName} {reservation.lastName}</Text>
+                <Text>Number of People: {reservation.numberOfPeople}</Text>
                 <Text>Date: {reservation.date}</Text>
                 <Text>Time: {reservation.time}</Text>
                 <Text fontWeight="bold">Status: <span style={{ color: reservation.status === 'cancelled' ? 'red' : reservation.status === 'confirmed' ? 'green' : 'yellow' }}>{reservation.status}</span></Text>
@@ -238,13 +252,29 @@ const InstructorProfile: React.FC = () => {
                   }
                 />
                 <FormLabel>Activity</FormLabel>
+                <Select
+                  value={selectedActivity || editedReservation?.activity}
+                  onChange={(e) => setSelectedActivity(e.target.value)}
+                >
+                  {activityOptions.map((activity) => (
+                    <option key={activity} value={activity}>
+                      {activity}
+                    </option>
+                  ))}
+                </Select>
+
+                <FormLabel>Number of People</FormLabel>
                 <Input
-                  type="text"
-                  value={editedReservation.activity}
+                  type="number"
+                  value={editedReservation?.numberOfPeople || ''}
                   onChange={(e) =>
-                    setEditedReservation({ ...editedReservation, activity: e.target.value })
+                    setEditedReservation({
+                      ...editedReservation,
+                      numberOfPeople: parseInt(e.target.value) || 0,
+                    })
                   }
                 />
+
                 <FormLabel>Date</FormLabel>
                 <Input
                   type="date"

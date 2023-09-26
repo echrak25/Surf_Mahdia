@@ -29,6 +29,7 @@ export default function Reservation() {
     activity: '',
     date: '',
     time: '',
+    numberOfPeople: '',
     status: 'not confirmed', // Set default status here
   });
 
@@ -91,6 +92,7 @@ export default function Reservation() {
           activity: '',
           date: '',
           time: '',
+          numberOfPeople: '',
           status: '',
         });
       } else {
@@ -191,6 +193,19 @@ export default function Reservation() {
                     <option value="kayak">Kayak</option>
                   </Select>
                 </FormControl>
+                <FormControl isRequired>
+                  <FormLabel>Number of People</FormLabel>
+                  <InputGroup>
+                    <Input
+                      type="number"
+                      name="numberOfPeople"
+                      placeholder="Number of People"
+                      value={formData.numberOfPeople}
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                </FormControl>
+
                 <FormControl isRequired isInvalid={!!dateError}>
                   <FormLabel>Date</FormLabel>
                   <InputGroup>

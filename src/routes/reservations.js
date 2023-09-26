@@ -46,6 +46,7 @@ router.post('/', async (req, res) => {
     activity,
     date,
     time,
+    numberOfPeople,
     status,
   } = req.body;
 
