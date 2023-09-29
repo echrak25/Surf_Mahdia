@@ -1,6 +1,4 @@
-
 import React, { useState, useEffect } from 'react';
-
 import {
   FormControl,
   FormLabel,
@@ -22,31 +20,42 @@ import {
   Link,
   Image,
   useColorMode,
-  ModalCloseButton, Heading,
+  ModalCloseButton,
+  Heading,
 } from '@chakra-ui/react';
-import {
-  CloseIcon,
-  HamburgerIcon,
-  MoonIcon,
-  SunIcon,
-  ViewIcon,
-  ViewOffIcon,
-} from '@chakra-ui/icons';
+import { CloseIcon, HamburgerIcon, MoonIcon, SunIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { NavLink as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 
 export default function NavBar() {
   const img = require("../assets/surfing_logo.jpg");
   const [instructors, setInstructors] = useState<Instructor[]>([]);
+  const [adminEmail, setAdminEmail] = useState('');
+  const [adminPassword, setAdminPassword] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const { isOpen, onOpen, onToggle } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen: isOpenSignin, onOpen: onOpenSignin, onClose: onCloseSignin } = useDisclosure();
+  const { isOpen: isOpenAdmin, onOpen: onOpenAdmin, onClose: onCloseAdmin } = useDisclosure();
   const [showPassword, setShowPassword] = useState(false);
-  const [loggedInInstructor, setLoggedInInstructor] = useState(false);
   const [loginError, setLoginError] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [adminData, setAdminData] = useState<AdminData[]>([]);
+
+  // Define handleClose function for the modal
+  const handleClose = () => {
+    setIsModalOpen(false);
+  };
+  interface AdminData {
+    _id: string;
+    email: string;
+    password: string;
+    firstName?: string;
+    lastName?: string;
+  }
+
   interface Instructor {
     _id: string;
     email: string;
@@ -54,6 +63,23 @@ export default function NavBar() {
     firstName?: string;
     lastName?: string;
   }
+
+  useEffect(() => {
+    const fetchAdminData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/admin');
+        if (response.status === 200) {
+          setAdminData(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching admin data:', error);
+      }
+    };
+
+    fetchAdminData();
+  }, []);
+
+  // Fetch instructors data on component mount
   useEffect(() => {
     const fetchInstructors = async () => {
       try {
@@ -62,7 +88,6 @@ export default function NavBar() {
           setInstructors(response.data);
         }
       } catch (error) {
-        console.log(instructors);
         console.error('Error fetching instructors:', error);
       }
     };
@@ -70,21 +95,38 @@ export default function NavBar() {
     fetchInstructors();
   }, []);
 
-  const handleLogin = async () => {
+  // Handle admin login
+  const handleAdminLogin = async () => {
+    try {
+      const loggedInAdmin = adminData.find((admin) => admin.email === adminEmail && admin.password === adminPassword);
+      if (loggedInAdmin) {
+        // Handle admin login success
+        window.location.href = '/admin'; // Redirect to admin panel
+        onCloseSignin();
+      } else {
+        setLoginError('Invalid admin email or password'); // Set error message
+      }
+    } catch (error) {
+      console.error('Error logging in as admin:', error);
+    }
+  };
+
+  // State variables and functions for instructor login
+  const handleInstructorLogin = async () => {
     try {
       const loggedInInstructor = instructors.find((instructor) => instructor.email === email && instructor.password === password);
       if (loggedInInstructor) {
         setLoggedIn(true);
-        setLoggedInInstructor(true);
-        window.location.href = '/instructors/profile'
+        window.location.href = '/instructors/profile';
         onCloseSignin();
       } else {
-        setLoginError('Invalid email or password'); // Set error message
+        setLoginError('Invalid instructor email or password'); // Set error message
       }
     } catch (error) {
-      console.error('Error logging in:', error);
+      console.error('Error logging in as instructor:', error);
     }
   };
+
   return (
     <Box>
       <Flex
@@ -108,13 +150,12 @@ export default function NavBar() {
         <Image
           rounded={'md'}
           alt={'logo'}
-          src={img} // Remplacez 'logoImage' par votre variable d'image réelle
-          h={90} // Augmentez la hauteur de l'image (par exemple, h={12})
+          src={img}
+          h={90}
           w={90}
-          ml={70} // Ajustez la marge gauche pour positionner l'image à gauche (par exemple, ml={4})
+          ml={70}
         />
         <Flex flex={{ base: 1 }} justify={{ base: 'start', md: 'center' }}>
-
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
           </Flex>
@@ -133,9 +174,57 @@ export default function NavBar() {
             }}>
             Sign In
           </Button>
+          < Button
+            onClick={onOpenAdmin} // Use onOpen to open the admin modal
+            display={{ base: 'none', md: 'inline-flex' }}
+            fontSize={'sm'}
+            fontWeight={600}
+            color={'white'}
+            bg={'pink.400'}
+            _hover={{
+              bg: 'pink.300',
+            }}>
+            Admin
+          </Button>
 
-
-
+          <Modal isOpen={isOpenAdmin} onClose={onCloseAdmin}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Admin Sign In</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <form onSubmit={handleAdminLogin}>
+                  <Stack spacing={3}>
+                    <FormControl>
+                      <FormLabel id="adminEmail">Email Address</FormLabel>
+                      <Input
+                        type="email"
+                        name="adminEmail"
+                        value={adminEmail}
+                        onChange={(e) => setAdminEmail(e.target.value)}
+                      />
+                    </FormControl>
+                    <FormControl id="adminPassword">
+                      <FormLabel>Password</FormLabel>
+                      <Input
+                        type="password"
+                        name="adminPassword"
+                        value={adminPassword}
+                        onChange={(e) => setAdminPassword(e.target.value)}
+                      />
+                    </FormControl>
+                  </Stack>
+                  {loginError && <div style={{ color: 'red' }}>{loginError}</div>}
+                </form>
+              </ModalBody>
+              <ModalFooter>
+                <Button colorScheme="pink" mr={3} type="submit" onClick={handleAdminLogin}>
+                  Sign In as Admin
+                </Button>
+                <Button onClick={onCloseAdmin}>Close</Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
           <Button onClick={toggleColorMode}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           </Button>
@@ -155,12 +244,13 @@ export default function NavBar() {
             <Heading color="blue.500" mb={4} fontWeight="bold" fontSize="3xl" textAlign="center" mx="auto">
               For instructors only
             </Heading>
-
             <FormControl id="email">
               <FormLabel>Email address</FormLabel>
-              <Input type="email"
+              <Input
+                type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)} />
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
@@ -178,10 +268,7 @@ export default function NavBar() {
                 />
               </Stack>
               {loginError && <div style={{ color: 'red' }}>{loginError}</div>}
-
             </FormControl>
-
-
           </ModalBody>
           <ModalFooter>
             <Flex justify="space-between" w="100%">
@@ -191,7 +278,7 @@ export default function NavBar() {
                 _hover={{
                   bg: 'blue.500',
                 }}
-                onClick={handleLogin}
+                onClick={handleInstructorLogin}
               >
                 Sign in
               </Button>
@@ -206,6 +293,7 @@ export default function NavBar() {
   );
 }
 
+
 interface NavItem {
   label: string;
   href: string;
@@ -216,8 +304,6 @@ const NAV_ITEMS: Array<NavItem> = [
     label: 'Home',
     href: '/',
   },
-
-
   {
     label: 'KiteSurf',
     href: '/KiteSurf',
@@ -229,14 +315,11 @@ const NAV_ITEMS: Array<NavItem> = [
   {
     label: 'kayak',
     href: '/Kayak',
-
   },
-
   {
     label: 'Pricing',
     href: '/Pricing',
   }
-
 ];
 
 const DesktopNav = () => {
@@ -264,9 +347,6 @@ const DesktopNav = () => {
   );
 };
 
-<>
-  <DesktopNav />
-</>
 const MobileNav = () => {
   return (
     <Stack
@@ -303,4 +383,3 @@ const MobileNavItem = ({ label, href }: NavItem) => {
     </Stack>
   );
 };
-
