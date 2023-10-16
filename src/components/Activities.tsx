@@ -10,13 +10,13 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { ReactElement } from 'react';
-import { FcAssistant } from 'react-icons/fc';
+
 
 interface CardProps {
   heading: string;
   description: string;
   icon: ReactElement;
-  link: string; // Add the link property
+  link: string;
 }
 
 function Activities(props: CardProps) {

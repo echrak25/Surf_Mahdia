@@ -55,7 +55,6 @@ const ManageInstructors: React.FC = () => {
                 }
 
                 const instructorsData: Instructor[] = response.data;
-
                 setInstructors(instructorsData);
             } catch (error) {
                 console.error('Error fetching instructors:', error);
@@ -63,7 +62,7 @@ const ManageInstructors: React.FC = () => {
         };
 
         fetchInstructors();
-    }, []);
+    }, [instructors]);
 
     const openEditModal = (instructor: Instructor) => {
         setEditedInstructor(instructor);
@@ -115,7 +114,10 @@ const ManageInstructors: React.FC = () => {
 
             if (response.status === 201) {
                 // Add the new instructor to the local state
-                setInstructors((prevInstructors) => [...prevInstructors, response.data]);
+                const newInstructorData = response.data;
+
+                // Use the functional form of setInstructors to ensure the latest state
+                setInstructors((prevInstructors) => [...prevInstructors, newInstructorData]);
 
                 // Close the modal
                 setIsNewInstructorModalOpen(false);
@@ -135,6 +137,7 @@ const ManageInstructors: React.FC = () => {
         }
     };
 
+
     const handleEditInputChange = (
         e: React.ChangeEvent<HTMLInputElement>,
         field: keyof Instructor
@@ -152,7 +155,7 @@ const ManageInstructors: React.FC = () => {
             // Make an API call to delete the instructor
             const response = await axios.delete(`http://localhost:3000/api/instructors/${instructorId}`);
 
-            if (response.status === 204) {
+            if (response.status === 200) {
                 toast.success("an instructor is deleted ", {
                     position: "top-right", // Customize notification position
                     autoClose: 10000, // Set auto-close duration in milliseconds (40 seconds)
@@ -167,6 +170,14 @@ const ManageInstructors: React.FC = () => {
                 );
             } else {
                 console.error('Error deleting instructor:', response.data.error);
+                toast.success("an instructor is deleted ", {
+                    position: "top-right", // Customize notification position
+                    autoClose: 10000, // Set auto-close duration in milliseconds (40 seconds)
+                    hideProgressBar: true, // Hide the progress bar
+                    closeOnClick: true, // Close the notification when clicked
+                    pauseOnHover: true, // Pause the timer when hovered
+                    draggable: true, // Make the notification draggable
+                })
             }
         } catch (error) {
             console.error('Error deleting instructor:', error);
