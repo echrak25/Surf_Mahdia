@@ -135,39 +135,42 @@ const InstructorProfile: React.FC = () => {
 
   const handleSaveEditedReservation = async () => {
     if (editedReservation) {
-      try {
-        // Make an API call to update the reservation with the edited data
-        const response = await axios.put(
-          `http://localhost:3000/api/reservations/${editedReservation._id}`,
-          {
-            firstName: editedReservation.firstName,
-            lastName: editedReservation.lastName,
-            activity: selectedActivity || editedReservation.activity,
-            date: editedReservation.date,
-            time: editedReservation.time,
-            numberOfPeople: editedReservation.numberOfPeople,
-            status: editedReservation.status,
-          }
-        );
-
-        if (response.status === 200) {
-          // Update the local state with the edited reservation
-          setReservations((prevReservations) =>
-            prevReservations.map((reservation) =>
-              reservation._id === editedReservation._id ? editedReservation : reservation
-            )
+      if (editedReservation.status === 'not confirmed') {
+        try {
+          // Make an API call to update the reservation with the edited data
+          const response = await axios.put(
+            `http://localhost:3000/api/reservations/${editedReservation._id}`,
+            {
+              firstName: editedReservation.firstName,
+              lastName: editedReservation.lastName,
+              activity: selectedActivity || editedReservation.activity,
+              date: editedReservation.date,
+              time: editedReservation.time,
+              numberOfPeople: editedReservation.numberOfPeople,
+              status: editedReservation.status,
+            }
           );
 
-          // Close the modal
-          setIsEditing(false);
-        } else {
-          console.error('Error updating reservation:', response.data.error);
+          if (response.status === 200) {
+            // Update the local state with the edited reservation
+            setReservations((prevReservations) =>
+              prevReservations.map((reservation) =>
+                reservation._id === editedReservation._id ? editedReservation : reservation
+              )
+            );
+
+            // Close the modal
+            setIsEditing(false);
+          } else {
+            console.error('Error updating reservation:', response.data.error);
+          }
+        } catch (error) {
+          console.error('Error updating reservation:', error);
         }
-      } catch (error) {
-        console.error('Error updating reservation:', error);
       }
     }
   };
+
 
   return (
     <Flex direction="column" align="center">
@@ -216,10 +219,16 @@ const InstructorProfile: React.FC = () => {
                   </Button>
                   <Button
                     colorScheme="blue"
-                    onClick={() => openEditModal(reservation)} // Open edit modal
+                    onClick={() => {
+                      if (reservation.status === 'not confirmed') {
+                        openEditModal(reservation); // Open edit modal
+                      }
+                    }}
+                    disabled={reservation.status !== 'not confirmed'}
                   >
                     Modify
                   </Button>
+
                 </Flex>
               </Flex>
             </Box>
