@@ -59,7 +59,7 @@ const InstructorProfile: React.FC = () => {
     };
 
     fetchReservations();
-  }, []);
+  }, [reservations]);
 
   const applyStatusFilter = () => {
     const threeMonthsAgo = new Date();

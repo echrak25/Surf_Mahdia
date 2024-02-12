@@ -77,7 +77,7 @@ export default function NavBar() {
     };
 
     fetchAdminData();
-  }, []);
+  }, [adminData]);
 
   // Fetch instructors data on component mount
   useEffect(() => {
@@ -93,7 +93,7 @@ export default function NavBar() {
     };
 
     fetchInstructors();
-  }, []);
+  }, [instructors]);
 
   // Handle admin login
   const handleAdminLogin = async () => {
@@ -112,7 +112,7 @@ export default function NavBar() {
   };
 
   // State variables and functions for instructor login
-  const handleInstructorLogin = async () => {
+  /*const handleInstructorLogin = async () => {
     try {
       const loggedInInstructor = instructors.find((instructor) => instructor.email === email && instructor.password === password);
       if (loggedInInstructor) {
@@ -126,6 +126,27 @@ export default function NavBar() {
       console.error('Error logging in as instructor:', error);
     }
   };
+*/
+  const handleInstructorLogin = async () => {
+    try {
+      // Assuming `email` and `password` are already defined in your component state
+      const loggedInInstructor = instructors.find(
+        (instructor) => instructor.email === email && instructor.password === password
+      );
+
+      if (loggedInInstructor) {
+        window.location.href = '/instructors/profile';
+        setLoggedIn(true);
+        onCloseSignin();
+      } else {
+        setLoginError('Invalid instructor email or password'); // Set error message
+      }
+    } catch (error) {
+      console.error('Error logging in as instructor:', error);
+    }
+  };
+
+  // Use useEffect to trigger the login action when the instructors state is updated // This will run whenever the instructors state changes
 
   return (
     <Box>

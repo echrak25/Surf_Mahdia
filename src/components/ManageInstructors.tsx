@@ -107,7 +107,7 @@ const ManageInstructors: React.FC = () => {
         }
     };
 
-    const handleNewInstructor = async () => {
+    /*const handleNewInstructor = async () => {
         try {
             // Make an API call to create a new instructor with the newInstructor data
             const response = await axios.post('http://localhost:3000/api/instructors', newInstructor);
@@ -135,7 +135,45 @@ const ManageInstructors: React.FC = () => {
         } catch (error) {
             console.error('Error creating instructor:', error);
         }
+    };*/
+    const handleNewInstructor = async () => {
+        try {
+            // Make an API call to create a new instructor with the newInstructor data
+            const response = await axios.post('http://localhost:3000/api/instructors', newInstructor);
+
+            if (response.status === 201) {
+                // Close the modal
+                setIsNewInstructorModalOpen(false);
+
+                // Clear the input fields
+                setNewInstructor({
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    password: '',
+                });
+
+                // Attempt to sign in with the new instructor
+                const signInResponse = await axios.post('http://localhost:3000/api/signin', {
+                    email: newInstructor.email,
+                    password: newInstructor.password,
+                });
+
+                if (signInResponse.status === 200) {
+                    // If sign-in is successful, update the local state with the new instructor
+                    const newInstructorData = response.data;
+                    setInstructors((prevInstructors) => [...prevInstructors, newInstructorData]);
+                } else {
+                    console.error('Error signing in with the new instructor:', signInResponse.data.error);
+                }
+            } else {
+                console.error('Error creating instructor:', response.data.error);
+            }
+        } catch (error) {
+            console.error('Error creating instructor:', error);
+        }
     };
+
 
 
     const handleEditInputChange = (
