@@ -44,6 +44,7 @@ const ManageInstructors: React.FC = () => {
         email: '',
         password: '',
     });
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true); // Track login status
 
     useEffect(() => {
         const fetchInstructors = async () => {
@@ -232,11 +233,26 @@ const ManageInstructors: React.FC = () => {
         });
     };
 
+
+
+    const handleLogout = () => {
+        window.location.href = '/Home'
+        localStorage.removeItem('isLoggedIn');
+        setIsLoggedIn(false);
+    };
+
     return (
+
         <Flex direction="column" align="center">
             <Heading as="h1" size="xl" my={4}>
                 Manage Instructors
             </Heading>
+            <Flex justify="flex-end" width="70%">
+                <Button colorScheme="green" onClick={handleLogout} marginRight={2}>
+                    Logout
+                </Button>
+            </Flex>
+
             <Table variant="simple">
                 <Thead>
                     <Tr>
@@ -378,7 +394,7 @@ const ManageInstructors: React.FC = () => {
                     </ModalFooter>
                 </ModalContent>
             </Modal>
-        </Flex>
+        </Flex >
     );
 };
 
